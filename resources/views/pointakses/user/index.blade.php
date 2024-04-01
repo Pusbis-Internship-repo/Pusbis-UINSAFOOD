@@ -26,7 +26,7 @@
             position: fixed;
             /* Stay in place */
             z-index: 9999;
-            /* Sit on top */
+            /* Atur z-index di sini */
             left: 0;
             top: 0;
             width: 100%;
@@ -38,7 +38,6 @@
             background-color: rgba(0, 0, 0, 0.4);
             /* Black w/ opacity */
         }
-
         /* Modal Content/Box */
         .modal-content {
             background-color: #fefefe;
@@ -459,97 +458,96 @@
     @include('frontend.include.content.snack')
     <!--Footer-->
     @include('frontend.include.footer')
-    @if ($lastOrder)
-    <script>
-        // Function untuk menampilkan modal review
-        function showModalReview() {
-            var modal = document.getElementById("myModalReview");
-            modal.style.display = "block";
+    @if (Auth::check() && $lastOrder)
+        <script>
+            // Function untuk menampilkan modal review
+            function showModalReview() {
+                var modal = document.getElementById("myModalReview");
+                modal.style.display = "block";
 
-            // Ambil data harga dan gambar menu yang dipilih dari pesanan terakhir
-            var menuId = document.getElementById("menu_id").value;
-            var menuPrice = document.querySelector('#menu_id option[value="' + menuId + '"]').getAttribute("data-price");
-            var menuPic = document.querySelector('#menu_id option[value="' + menuId + '"]').getAttribute("data-pic");
+                // Ambil data harga dan gambar menu yang dipilih dari pesanan terakhir
+                var menuId = document.getElementById("menu_id").value;
+                var menuPrice = document.querySelector('#menu_id option[value="' + menuId + '"]').getAttribute("data-price");
+                var menuPic = document.querySelector('#menu_id option[value="' + menuId + '"]').getAttribute("data-pic");
 
-            // Isi elemen HTML dengan data harga dan gambar menu yang dipilih
-            document.getElementById("menuPrice").textContent = menuPrice;
-            document.getElementById("menuPic").src = menuPic;
-        }
-
-        // Periksa apakah pesanan berhasil dilakukan
-        var orderSuccess = true; // Ganti dengan logika sesuai dengan aplikasi Anda
-
-        // Jika pesanan berhasil, tampilkan modal review
-        if (orderSuccess) {
-            showModalReview();
-        }
-
-        // Event listener untuk menutup modal ketika tombol close di klik
-        document.addEventListener("click", function(event) {
-            if (event.target.classList.contains("close")) {
-                var modals = document.querySelectorAll(".modal");
-                modals.forEach(function(modal) {
-                    modal.style.display = "none";
-                });
+                // Isi elemen HTML dengan data harga dan gambar menu yang dipilih
+                document.getElementById("menuPrice").textContent = menuPrice;
+                document.getElementById("menuPic").src = menuPic;
             }
-        });
-        
-        // Event listener untuk memantau perubahan pada pilihan menu
-        document.getElementById("menu_id").addEventListener("change", function() {
-            // Ambil data harga dan gambar menu yang dipilih dari elemen select
-            var menuId = this.value;
-            var menuPrice = this.options[this.selectedIndex].getAttribute("data-price");
-            var menuPic = this.options[this.selectedIndex].getAttribute("data-pic");
 
-            // Isi elemen HTML dengan data harga dan gambar menu yang dipilih
-            document.getElementById("menuPrice").textContent = menuPrice;
-            document.getElementById("menuPic").src = menuPic;
-        });
+            // Periksa apakah pesanan berhasil dilakukan
+            var orderSuccess = true; // Ganti dengan logika sesuai dengan aplikasi Anda
 
-        // Event listener untuk menutup modal ketika klik dilakukan di luar modal
-        window.onclick = function(event) {
-            var modals = document.querySelectorAll(".modal");
-            modals.forEach(function(modal) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
+            // Jika pesanan berhasil, tampilkan modal review
+            if (orderSuccess) {
+                showModalReview();
+            }
+
+            // Event listener untuk menutup modal ketika tombol close di klik
+            document.addEventListener("click", function(event) {
+                if (event.target.classList.contains("close")) {
+                    var modals = document.querySelectorAll(".modal");
+                    modals.forEach(function(modal) {
+                        modal.style.display = "none";
+                    });
                 }
             });
-        };
-        // Event listener untuk tombol Submit
-        document.getElementById("submitRating").addEventListener("click", function() {
-            // Mengambil data rating dan ulasan dari formulir
-            var rating = document.querySelector('input[name="rating"]:checked').value;
-            var review = document.getElementById("review").value;
 
-            // Mengirim data rating dan ulasan secara asinkron menggunakan Ajax
-            var formData = new FormData(document.getElementById("ratingForm"));
-            formData.append('rating', rating);
-            formData.append('review', review);
+            // Event listener untuk memantau perubahan pada pilihan menu
+            document.getElementById("menu_id").addEventListener("change", function() {
+                // Ambil data harga dan gambar menu yang dipilih dari elemen select
+                var menuId = this.value;
+                var menuPrice = this.options[this.selectedIndex].getAttribute("data-price");
+                var menuPic = this.options[this.selectedIndex].getAttribute("data-pic");
 
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', document.getElementById("ratingForm").getAttribute('action'), true);
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    // Jika pengiriman berhasil, tutup modal
-                    closeModal();
-                } else {
-                    // Jika terjadi kesalahan, tindakan yang sesuai dapat ditambahkan di sini
+                // Isi elemen HTML dengan data harga dan gambar menu yang dipilih
+                document.getElementById("menuPrice").textContent = menuPrice;
+                document.getElementById("menuPic").src = menuPic;
+            });
+
+            // Event listener untuk menutup modal ketika klik dilakukan di luar modal
+            window.onclick = function(event) {
+                var modals = document.querySelectorAll(".modal");
+                modals.forEach(function(modal) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                });
+            };
+            // Event listener untuk tombol Submit
+            document.getElementById("submitRating").addEventListener("click", function() {
+                // Mengambil data rating dan ulasan dari formulir
+                var rating = document.querySelector('input[name="rating"]:checked').value;
+                var review = document.getElementById("review").value;
+
+                // Mengirim data rating dan ulasan secara asinkron menggunakan Ajax
+                var formData = new FormData(document.getElementById("ratingForm"));
+                formData.append('rating', rating);
+                formData.append('review', review);
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', document.getElementById("ratingForm").getAttribute('action'), true);
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        // Jika pengiriman berhasil, tutup modal
+                        closeModal();
+                    } else {
+                        // Jika terjadi kesalahan, tindakan yang sesuai dapat ditambahkan di sini
+                        console.error('Error:', xhr.responseText);
+                    }
+                };
+                xhr.onerror = function() {
                     console.error('Error:', xhr.responseText);
-                }
-            };
-            xhr.onerror = function() {
-                console.error('Error:', xhr.responseText);
-            };
-            xhr.send(formData);
-        });
+                };
+                xhr.send(formData);
+            });
 
-        // Fungsi untuk menutup modal
-        function closeModal() {
-            var modal = document.getElementById("myModalReview");
-            modal.style.display = "none";
-        }
-
-    </script>
+            // Fungsi untuk menutup modal
+            function closeModal() {
+                var modal = document.getElementById("myModalReview");
+                modal.style.display = "none";
+            }
+        </script>
     @endif
 
 
