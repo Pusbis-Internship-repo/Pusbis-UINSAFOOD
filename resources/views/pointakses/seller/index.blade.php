@@ -15,7 +15,7 @@
         </div>
       </div>
     </div><!-- /.container-fluid -->
-    <div class="row">
+    <div class="row mx-4">
           <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-success">
@@ -61,8 +61,8 @@
           </div>
           <!-- ./col -->
         </div>
-        <div class="container px-4 mx-auto"> 
-          <div class="p-6 m-20 bg-white rounded shadow">
+        <div class="row mx-4">
+          <div class="col-12 bg-white rounded shadow">
             {!! $chart->container() !!}
           </div>
         </div>
