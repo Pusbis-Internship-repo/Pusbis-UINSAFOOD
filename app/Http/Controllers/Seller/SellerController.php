@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Seller;
 
+use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\Controller;
@@ -25,7 +26,21 @@ class SellerController extends Controller
         $userId = Auth::id();
 
         $sellertotalmenus = DB::table('table_menu')->where('users_id', $userId)->count();
-        $totalwaitorder = DB::table('orders')->where('status', 'setuju')->where('users_id', $userId)->count();
+        $totalwaitorder = Order::whereHas('menu', function($query) use ($userId) {
+                                $query->where('users_id', $userId);
+                            })
+                            ->where('status', 'setuju')
+                            ->count();
+
+        $totalincome = Order::where('status', 'setuju')
+                        ->whereHas('menu', function ($query) use ($userId) {
+                            $query->where('users_id', $userId);
+                        })
+                        ->get()
+                        ->sum(function ($order) {
+                            return $order->quantity * $order->menu->menu_price;
+                        });
+
 
         $datachart['chart'] =  $chart->build();
 
@@ -38,7 +53,7 @@ class SellerController extends Controller
             ->groupBy('id_pesanan', 'total', 'nama_penerima', 'alamat_pengiriman', 'fakultas', 'tanggal', 'jam', 'users.nama_lengkap', 'status')
             ->get();
 
-        $data = compact('groupedOrders', 'sellertotalmenus', 'totalwaitorder');
+        $data = compact('groupedOrders', 'sellertotalmenus', 'totalwaitorder', 'totalincome');
         $merge = array_merge($data, $datachart);
         return view('pointakses/seller/index', $merge);
     }

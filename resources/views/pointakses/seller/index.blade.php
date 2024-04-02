@@ -20,9 +20,9 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>5</h3>
+                <h3>{{number_format($totalincome, 0, ',', '.')}}</h3>
 
-                <p>Pesanan menunggu</p>
+                <p>Income</p>
               </div>
               <div class="icon">
                 <i class="icon-moneybag"></i>
