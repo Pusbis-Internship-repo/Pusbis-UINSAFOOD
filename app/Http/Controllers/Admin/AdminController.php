@@ -12,7 +12,7 @@ class AdminController extends Controller
 {
         public function index(AdminMenuReviewChart $chart)
     {
-        $totalOrders = DB::table('orders')->count();
+        $totalOrders = DB::table('orders')->where('status', 'pending')->count();
         $totalacceptedorders = DB::table('orders')->where('status', 'setuju')->count();
         $totalsellers = DB::table('users')->where('role', 'seller')->count();
         $totalmenus = DB::table('table_menu')->count();

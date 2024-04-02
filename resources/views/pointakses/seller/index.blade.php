@@ -15,52 +15,60 @@
         </div>
       </div>
     </div><!-- /.container-fluid -->
+    <div class="row">
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>5</h3>
+
+                <p>Pesanan menunggu</p>
+              </div>
+              <div class="icon">
+                <i class="icon-moneybag"></i>
+              </div>
+              <a href="{{route('admin.orders')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h3>{{ $totalwaitorder }}</h3>
+                <p>Pesanan diterima</p>
+              </div>
+              <div class="icon">
+                <i class="icon-cart2"></i>
+              </div>
+              <a href="{{route('admin.history')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3>{{ $sellertotalmenus }}</h3>
+
+                <p>Menu</p>
+              </div>
+              <div class="icon">
+                <i class="icon-menu"></i>
+              </div>
+              <a href="{{route('datamenu')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+        </div>
+        <div class="container px-4 mx-auto"> 
+          <div class="p-6 m-20 bg-white rounded shadow">
+            {!! $chart->container() !!}
+          </div>
+        </div>
+      </div>
   </section>
-  <div class="card">
-    <div class="card-body table-responsive p-0">
-    @if($groupedOrders->isEmpty())
-    <br>
-    <br>
-    <div class="d-flex justify-content-center">
-      <div class="badge bg-primary text-wrap" style="width: 6rem;">
-        KOSONG
-      </div>
-    </div>
-    <br>
-    <h2 class="text-center"><strong><em>Belum ada pesanan saat ini~</em></strong></h2>
-      @else
-        <table class="table table-hover text-nowrap">
-            <thead>
-                <tr>
-                    <th>Data Order</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($groupedOrders as $groupedOrder)
-                <tr>
-                    <td><strong>ID Pesanan: {{ $groupedOrder->id_pesanan }} </strong>
-                        <br><strong>Pemesan: {{$groupedOrder->nama_lengkap}}</strong>
-                        <br>Menu (Jumlah): {{ $groupedOrder->menu_with_quantity }}
-                        <br>Total: Rp. {{ number_format($groupedOrder->total, 0, ',', '.') }}
-                        <br>Nama Penerima: {{ $groupedOrder->nama_penerima }}
-                        <br>Alamat Pengiriman: {{ $groupedOrder->alamat_pengiriman }}
-                        <br>Fakultas: {{ $groupedOrder->fakultas }}
-                        <br>Tanggal & Jam: {{ $groupedOrder->tanggal }}, {{$groupedOrder->jam}}
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-      </div>
-    @endif
-    <div class="container px-4 mx-auto"> 
-
-      <div class="p-6 m-20 bg-white rounded shadow">
-        {!! $chart->container() !!}
-      </div>
-
-    </div>
-  </div>
+</div>
 </div>
 
 <script src="{{ $chart->cdn() }}"></script>

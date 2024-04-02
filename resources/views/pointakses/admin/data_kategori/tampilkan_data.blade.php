@@ -3,8 +3,9 @@
 
 @section('content')
     <div class="content-wrapper iframe-mode" data-widget="iframe" data-loading-screen="750">
-        <a href="{{ route('createcategory') }}" class="btn btn-success">Tambah Kategori</a>
         <div class="content">
+            <br>
+            <a href="{{ route('createcategory') }}" class="btn btn-success">Tambah Kategori</a>
             <div class="col-12 mt-4">
                 <div class="card">
                     <div class="card-header">

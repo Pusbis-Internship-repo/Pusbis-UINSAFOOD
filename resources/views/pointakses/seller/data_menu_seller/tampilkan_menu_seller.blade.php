@@ -50,7 +50,7 @@
                                 <th>Harga Menu</th>
                                 <th>Kategori</th>
                                 <th>Vendor</th>
-                                <th>Min Order</th>
+                                <th>Waktu Pre-Order (Maks)</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -73,8 +73,8 @@
                                                 No Category
                                             @endif
                                         </td>
-                                        <td>{{ $menu->users_id }}</td>
-                                        <td>{{ $menu->min_order_time }}</td>
+                                        <td class="text-center">{{ $menu->users_id }}</td>
+                                        <td class="text-center">{{ $menu->min_order_time }}</td>
                                         <td>
                                             <a href="{{ route('deletemenuseller', ['id' => $menu->id]) }}"
                                                 class="btn btn-danger"
