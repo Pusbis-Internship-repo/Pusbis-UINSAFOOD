@@ -36,7 +36,7 @@
                 <li class="nav-item">
                     <span>
                         <a href="{{route('datakategori')}}" class="nav-link">
-                            <i class="nav-icon fas fa-table"></i>
+                            <i class="nav-icon fas fa-columns"></i>
                             <p>
                                 Kategori
                             </p>
@@ -46,7 +46,7 @@
                 <li class="nav-item">
                     <span>
                         <a href="{{route('datamenu')}}" class="nav-link">
-                            <i class="nav-icon fas fa-table"></i>
+                            <i class="nav-icon fas fa-th"></i>
                             <p>
                                 Menu
                             </p>
@@ -74,7 +74,7 @@
                 <li class="nav-item">
                     <span>
                         <a href="{{route('dataseller')}}" class="nav-link">
-                            <i class="nav-icon fas fa-table"></i>
+                            <i class="nav-icon far fa-plus-square"></i>
                             <p>
                                 Seller
                             </p>

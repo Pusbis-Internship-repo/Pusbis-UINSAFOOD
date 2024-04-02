@@ -25,7 +25,7 @@
                 <li class="nav-item">
                     <span>
                         <a href="{{ route('seller') }}" class="nav-link">
-                            <i class="nav-icon fas fa-table"></i>
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Dashboard
                             </p>
@@ -35,7 +35,7 @@
                 <li class="nav-item">
                     <span>
                         <a href="{{route('data_menu_seller')}}" class="nav-link">
-                            <i class="nav-icon fas fa-table"></i>
+                            <i class="nav-icon fas fa-th"></i>
                             <p>
                                 Menu
                             </p>

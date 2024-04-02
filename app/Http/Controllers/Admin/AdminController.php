@@ -10,13 +10,20 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-        public function index(AdminMenuReviewChart $chart)
+    public function index(AdminMenuReviewChart $chart)
     {
         $totalOrders = DB::table('orders')->count();
-        $totalacceptedorders = DB::table('orders')->where('status', 'setuju')->count();
+        $totalAcceptedOrders = DB::table('orders')
+            ->where('status', 'setuju')
+            ->distinct('id_pesanan')
+            ->count('id_pesanan');
+        $totalPendingOrders = DB::table('orders')
+            ->where('status', 'pending')
+            ->distinct('id_pesanan')
+            ->count('id_pesanan');
         $totalsellers = DB::table('users')->where('role', 'seller')->count();
         $totalmenus = DB::table('table_menu')->count();
-        
+
         // Membuat chart
         $datachart['chart'] =  $chart->build();
 
@@ -38,7 +45,7 @@ class AdminController extends Controller
             ->get();
 
         // Menggabungkan semua variabel ke dalam satu array
-        $data = compact('totalOrders', 'totalacceptedorders', 'totalsellers', 'totalmenus', 'groupedOrders');
+        $data = compact('totalOrders', 'totalAcceptedOrders', 'totalsellers', 'totalmenus', 'groupedOrders', 'totalPendingOrders');
 
         // Menggabungkan $datachart ke dalam array $data
         $datamerge = array_merge($data, $datachart);

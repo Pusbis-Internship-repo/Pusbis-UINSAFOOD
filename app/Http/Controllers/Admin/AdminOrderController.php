@@ -11,6 +11,14 @@ class AdminOrderController extends Controller
 {
     public function groupDataByCreatedAt(Request $request)
     {
+        $totalPendingOrders = DB::table('orders')
+            ->where('status', 'pending')
+            ->distinct('id_pesanan')
+            ->count('id_pesanan');
+        $totalAcceptedOrders = DB::table('orders')
+            ->where('status', 'setuju') 
+            ->distinct('id_pesanan')
+            ->count('id_pesanan');
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
         $search = $request->input('search');
@@ -50,7 +58,12 @@ class AdminOrderController extends Controller
             ->groupBy('id_pesanan', 'total', 'nama_penerima', 'alamat_pengiriman', 'fakultas', 'tanggal', 'jam', 'users.nama_lengkap')
             ->get();
 
-        return view('pointakses/admin/data_transaksi/tampilkan_transaksi', ['groupedOrders' => $groupedOrders, 'search' => $search]);
+        return view('pointakses/admin/data_transaksi/tampilkan_transaksi', [
+            'groupedOrders' => $groupedOrders,
+            'search' => $search,
+            'totalPendingOrders' => $totalPendingOrders,
+            'totalAcceptedOrders' => $totalAcceptedOrders,
+        ]);
     }
 
     public function admin_invoice($id_pesanan)

@@ -25,7 +25,7 @@
             /* Hidden by default */
             position: fixed;
             /* Stay in place */
-            z-index: 9999;
+            z-index: 100;
             /* Atur z-index di sini */
             left: 0;
             top: 0;

@@ -16,11 +16,16 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Charts\SellerChart;
 
+use App\Models\Menu;
+
 class SellerController extends Controller
 {
     function index(SellerChart $chart){
     
         $userId = Auth::id();
+
+        $sellertotalmenus = DB::table('table_menu')->where('users_id', $userId)->count();
+        $totalwaitorder = DB::table('orders')->where('status', 'setuju')->where('users_id', $userId)->count();
 
         $datachart['chart'] =  $chart->build();
 
@@ -33,7 +38,7 @@ class SellerController extends Controller
             ->groupBy('id_pesanan', 'total', 'nama_penerima', 'alamat_pengiriman', 'fakultas', 'tanggal', 'jam', 'users.nama_lengkap', 'status')
             ->get();
 
-        $data = compact('groupedOrders');
+        $data = compact('groupedOrders', 'sellertotalmenus', 'totalwaitorder');
         $merge = array_merge($data, $datachart);
         return view('pointakses/seller/index', $merge);
     }

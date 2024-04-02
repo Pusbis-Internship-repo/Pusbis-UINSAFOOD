@@ -18,7 +18,6 @@
         padding: 20px;
         border: 1px solid #888;
         width: 60%;
-        /* Ubah lebar menjadi 60% */
         height: 80%;
     }
 
@@ -41,54 +40,37 @@
         cursor: pointer;
     }
 
-    /* Style for the Order Now button */
-    .menu_btn {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        text-decoration: none;
+    /* CSS for carousel */
+    .owl-carousel {
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
     }
 
-    .menu_btn:hover {
-        background-color: #0056b3;
-    }
-
-    .modal-content img {
-        max-width: 50%;
-        max-height: 40%;
-        /* Mengatur tinggi maksimum gambar */
-        display: block;
-        /* Menghilangkan spasi ekstra */
-    }
-
-    /* Tambahkan gaya CSS untuk mengatur posisi menu-foods */
-    .menu-image-and-foods {
+    .owl-carousel .owl-stage {
         display: flex;
-        align-items: flex-start;
     }
 
-    .menu-image-and-foods img {
-        max-width: 50%;
-        /* Lebar gambar maksimum */
-        max-height: 100%;
-        /* Tinggi gambar maksimum */
+    .owl-carousel .owl-item {
+        flex: 0 0 auto;
     }
 
-    #menu-foods {
-        margin-left: 20px;
-        /* Atur jarak antara gambar dan daftar makanan */
-        padding: 0;
-        list-style-type: none;
+    .owl-carousel .owl-nav {
+        display: none;
     }
 
-    #menu-foods li {
-        margin-bottom: 5px;
-        /* Atur jarak antara setiap item makanan */
+    /* Show navigation buttons on smaller screens */
+    @media screen and (max-width: 768px) {
+        .owl-carousel .owl-nav {
+            display: block;
+        }
     }
+    @media screen and (max-width: 480px) {
+    .owl-carousel .owl-item {
+        margin-right: -30px; /* Atur nilai margin-right ke nilai negatif yang lebih kecil pada layar yang lebih kecil */
+    }
+}
 </style>
 
 
@@ -176,8 +158,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 ...
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        $('.gallary_image_box').owlCarousel({
+$(document).ready(function(){
+        $('.owl-carousel').owlCarousel({
             loop: true,
             margin: 10,
             nav: true,
@@ -193,7 +175,6 @@
                 }
             }
         });
-
         // Event listener for opening modal when "Order Now" button is clicked
         $('.menu_btn_gallery').click(function(event) {
             event.preventDefault(); // Prevent the default behavior of the link
