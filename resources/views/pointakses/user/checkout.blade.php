@@ -88,14 +88,14 @@
                 <option value="Sains dan Teknologi">Sains dan Teknologi</option>
             </select>
         </div>
-        
         <div class="mb-3">
             <label for="tanggal" class="form-label">Tanggal</label>
-            <input type="date" class="form-control" id="tanggal" name="tanggal" required>
+            <input type="date" class="form-control" id="tanggal" name="tanggal" required style="width: 150px" 
+                    min="{{ \Carbon\Carbon::now()->addDay()->format('Y-m-d') }}">
         </div>
         <div class="mb-3">
             <label for="jam" class="form-label">Jam</label>
-            <input type="time" class="form-control" id="jam" name="jam" required>
+            <input type="time" class="form-control" id="jam" name="jam" required style="width: 150px">
         </div>
         <div class="mb-3">
             <label for="catatan" class="form-label">Catatan</label>

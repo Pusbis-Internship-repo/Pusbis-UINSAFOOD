@@ -288,7 +288,7 @@
         .checkout-btn button {
             flex: 2;
             /* Mengatur agar ukuran tombol menjadi sama */
-            background-color: #b7c2b7;
+            background-color: #45a049;
             color: white;
             padding: 10px 20px;
             border: none;
@@ -298,7 +298,7 @@
 
         .continue-btn:hover,
         .checkout-btn button:hover {
-            background-color: #45a049;
+            background-color: #000;
         }
 
         /* Menambahkan aturan media query untuk layar dengan lebar maksimum 768px */

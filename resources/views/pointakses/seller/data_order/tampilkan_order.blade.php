@@ -55,6 +55,7 @@
                         <table class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
+                                    <th>Waktu</th>
                                     <th>Data Order</th>
                                     <th>Invoice</th>
                                 </tr>
@@ -62,6 +63,7 @@
                             <tbody>
                                 @foreach($groupedOrders as $groupedOrder)
                                 <tr>
+                                    <td><strong>{{ $groupedOrder->tanggal }}, {{$groupedOrder->jam }}</strong></td>
                                     <td><strong>ID Pesanan: {{ $groupedOrder->id_pesanan }} </strong>
                                         <br><strong>Pemesan: {{$groupedOrder->nama_lengkap}}</strong>
                                         <br>Menu (Jumlah): {{ $groupedOrder->menu_with_quantity }}
@@ -73,7 +75,7 @@
                                     </td>
                                     <td>@isset($groupedOrder->id_pesanan)
                                         <a href="{{ route('seller.invoice', ['id_pesanan' => $groupedOrder->id_pesanan]) }}"
-                                            class="btn btn-info">Buka Invoice</a>
+                                            class="btn btn-info" target="_blank">Buka Invoice</a>
                                         @endisset
                                     </td>
                                 </tr>

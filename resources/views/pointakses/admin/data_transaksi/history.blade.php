@@ -46,6 +46,7 @@
                     <table class="table table-hover text-nowrap">
                         <thead>
                             <tr>
+                                <th>Waktu</th>
                                 <th>Data Order</th>
                                 <th>Invoice</th>
                                 <th>Status</th>
@@ -54,6 +55,7 @@
                         <tbody>
                             @foreach($groupedOrders as $groupedOrder)
                             <tr>
+                                <td><strong>{{ $groupedOrder->tanggal }}, {{$groupedOrder->jam }}</strong></td>
                                 <td><strong>ID Pesanan: {{ $groupedOrder->id_pesanan }} </strong>
                                     <br><strong>Pemesan: {{ $groupedOrder->nama_lengkap }}</strong>
                                     <br>Menu (Jumlah): {{ $groupedOrder->menu_with_quantity }}
@@ -66,11 +68,17 @@
                                 </td>
                                 <td>@isset($groupedOrder->id_pesanan)
                                     <a href="{{ route('admin_invoice', ['id_pesanan' => $groupedOrder->id_pesanan]) }}"
-                                        class="btn btn-info">Lihat Invoice</a>
+                                        class="btn btn-info" target="_blank">Lihat Invoice</a>
                                     @endisset</td>
-                                <td>
-                                    <strong>{{ $groupedOrder->status }}</strong>
-                                </td>
+                                    <td>
+                                        @if($groupedOrder->status === 'Setuju')
+                                            <strong class="text-success">{{ $groupedOrder->status }}</strong>
+                                        @elseif($groupedOrder->status === 'tolak')
+                                            <strong class="text-danger">{{ $groupedOrder->status }}</strong>
+                                        @else
+                                            <strong class="text-warning">{{ $groupedOrder->status }}</strong>
+                                        @endif
+                                    </td>
                             </tr>
                             @endforeach
                         </tbody>

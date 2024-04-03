@@ -14,6 +14,7 @@ use App\Models\Review;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -260,6 +261,7 @@ class UserController extends Controller
         if ($startDate && $endDate) {
             $groupedOrdersQuery->whereBetween('tanggal', [$startDate, $endDate]);
         }
+
         $groupedOrders = $groupedOrdersQuery
             ->groupBy('id_pesanan', 'total', 'nama_penerima', 'alamat_pengiriman', 'fakultas', 'tanggal', 'jam', 'status')
             ->get();

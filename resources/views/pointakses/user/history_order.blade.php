@@ -19,7 +19,7 @@
     <div class="card-body table-responsive p-0">
         <br>
         <h3>Cari Transaksi</h3>
-        <form method="GET" action="{{ route('admin.history') }}">
+        <form method="GET" action="{{ route('history_order') }}">
             <div class="col-md-3">
                 <label for="">Tanggal mulai</label>
                 <input type="date" name="start_date" class="form-control">
@@ -36,6 +36,7 @@
     <table class="table table-hover text-nowrap">
         <thead>
             <tr>
+                <th>Waktu</th>
                 <th>Data Order</th>
                 <th>Invoice</th>
                 <th>Status</th>
@@ -44,6 +45,9 @@
         <tbody>
             @foreach ($groupedOrders as $groupedOrder)
             <tr>
+                <td>
+                    <strong>{{ $groupedOrder->tanggal }}, {{ $groupedOrder->jam }}</strong>
+                </td>
                 <td>
                     @isset($groupedOrder->id_pesanan)
                     <strong>ID Pesanan: {{ $groupedOrder->id_pesanan }}</strong>
@@ -58,11 +62,17 @@
                 <td>
                     @isset($groupedOrder->id_pesanan)
                     <a href="{{ route('user_invoice', ['id_pesanan' => $groupedOrder->id_pesanan]) }}"
-                        class="btn btn-info">Buka Invoice</a>
+                        class="btn btn-info" target="_blank">Buka Invoice</a>
                     @endisset
                 </td>
                 <td>
-                    <strong>{{ $groupedOrder->status }}</strong>
+                    @if($groupedOrder->status === 'Setuju')
+                        <strong class="text-success">{{ $groupedOrder->status }}</strong>
+                    @elseif($groupedOrder->status === 'tolak')
+                        <strong class="text-danger">{{ $groupedOrder->status }}</strong>
+                    @else
+                        <strong class="text-warning">{{ $groupedOrder->status }}</strong>
+                    @endif
                 </td>
             </tr>
             @endforeach

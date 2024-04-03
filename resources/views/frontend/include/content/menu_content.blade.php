@@ -21,7 +21,8 @@
             <option value="">Pilih Kategori</option>
             @if($categories && count($categories) > 0)
                 @foreach($categories as $category)
-                    <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                    <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                    {{ $category->category_name }}</option>
                 @endforeach
             @endif
         </select>
@@ -29,7 +30,8 @@
             <option value="">Pilih Penjual</option>
             @if($sellers && count($sellers) > 0)
                 @foreach($sellers as $seller)
-                    <option value="{{ $seller->id }}">{{ $seller->nama_lengkap }}</option>
+                    <option value="{{ $seller->id }}" {{ request('seller') == $seller->id ? 'selected' : '' }}>
+                    {{ $seller->nama_lengkap }}</option>
                 @endforeach
             @endif
         </select>
@@ -53,7 +55,8 @@
             <option value="">Select Category</option>
             @if($categories && count($categories) > 0)
                 @foreach($categories as $category)
-                    <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                    <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                    {{ $category->category_name }}</option>
                 @endforeach
             @endif
         </select>
@@ -61,7 +64,8 @@
             <option value="">Select Seller</option>
             @if($sellers && count($sellers) > 0)
                 @foreach($sellers as $seller)
-                    <option value="{{ $seller->id }}">{{ $seller->nama_lengkap }}</option>
+                    <option value="{{ $seller->id }}" {{ request('seller') == $seller->id ? 'selected' : '' }}>
+                    {{ $seller->nama_lengkap }}</option>
                 @endforeach
             @endif
         </select>
