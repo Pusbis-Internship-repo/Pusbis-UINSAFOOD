@@ -27,9 +27,10 @@
 
     .modal-content img {
         max-width: 100%;
-        max-height: 60vh; /* Mengurangi tinggi maksimum gambar */
+        max-height: 40vh; /* Mengurangi tinggi maksimum gambar */
         flex: 0 0 auto; /* Agar gambar tidak memperbesar untuk mengisi ruang */
-        margin-right: 20px; /* Beri margin kanan agar terpisah dari teks */
+        margin-bottom: 20px; /* Beri margin kanan agar terpisah dari teks */
+        margin-top: 20px;
     }
 
     .close {
@@ -159,11 +160,11 @@
         <div class="menu-details">
             <div class="menu-image-and-foods">
                 <img src="" alt="Menu Image" id="menu-image">
+                <h2 id="menu-name"></h2>
                 <ul id="menu-foods"></ul>
             </div>
             <div class="menu-info">
                 <br>
-                <h2 id="menu-name"></h2>
                 <p><strong id="menu-desc"></strong></p>
                 <h3 id="menu-price"></h3>
                 <br>
