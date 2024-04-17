@@ -53,7 +53,7 @@
                         <!-- textarea -->
                         <div class="form-group">
                             <label for="menu_desc">Deskripsi Menu:</label>
-                            <textarea class="form-control @error('menu_desc') is-invalid @enderror" name="menu_desc" id="menu_desc" rows="3" placeholder="Enter ...">{{ old('menu_desc') }}</textarea>
+                            <textarea class="form-control @error('menu_desc') is-invalid @enderror" name="menu_desc" id="menu_desc" rows="3" maxlength="35" placeholder="Max 35 karakter.">{{ old('menu_desc') }}</textarea>
                             @error('menu_desc')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

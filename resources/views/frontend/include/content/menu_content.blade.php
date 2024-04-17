@@ -4,6 +4,39 @@
 <div class="menu" id="Menu">
     <h1><span>Menu</span></h1>
     
+    @guest
+    <form action="{{ route('menu') }}" method="GET">
+        <div class="form-group" style="display: flex; ">
+            <div style="max-width: 180px; margin-right: 6px;">
+                <input type="search" name="search" class="form-control" placeholder="Cari makanan disini...">
+            </div>
+            <button type="submit" class="btn btn-default">
+                <i class="icon-search"></i>
+            </button>
+        </div>
+    </form>
+    <form action="{{ route('filter.menu') }}" method="GET" style="display: flex;">
+        <select name="category" id="category" class="form-control" style="max-width: 178px; margin-right: 6px;">
+            <option value="">Select Category</option>
+            @if($categories && count($categories) > 0)
+                @foreach($categories as $category)
+                    <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                    {{ $category->category_name }}</option>
+                @endforeach
+            @endif
+        </select>
+        <select name="seller" id="seller" class="form-control" style="max-width: 178px; margin-right: 6px;">
+            <option value="">Select Seller</option>
+            @if($sellers && count($sellers) > 0)
+                @foreach($sellers as $seller)
+                    <option value="{{ $seller->id }}" {{ request('seller') == $seller->id ? 'selected' : '' }}>
+                    {{ $seller->nama_lengkap }}</option>
+                @endforeach
+            @endif
+        </select>
+        <button type="submit" class="btn btn-default">Filter</button>
+    </form>
+    @endguest
     @auth
     <form action="{{ route('menu_user') }}" method="GET">
         <div class="form-group" style="display: flex; ">
@@ -39,39 +72,6 @@
     </form>
     @endauth
 
-    @guest
-    <form action="{{ route('menu_user') }}" method="GET">
-        <div class="form-group" style="display: flex; ">
-            <div style="max-width: 180px; margin-right: 6px;">
-                <input type="search" name="search" class="form-control" placeholder="Search">
-            </div>
-            <button type="submit" class="btn btn-default">
-                <i class="icon-search"></i>
-            </button>
-        </div>
-    </form>
-    <form action="{{ route('filter.menu') }}" method="GET" style="display: flex;">
-        <select name="category" id="category" class="form-control" style="max-width: 178px; margin-right: 6px;">
-            <option value="">Select Category</option>
-            @if($categories && count($categories) > 0)
-                @foreach($categories as $category)
-                    <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
-                    {{ $category->category_name }}</option>
-                @endforeach
-            @endif
-        </select>
-        <select name="seller" id="seller" class="form-control" style="max-width: 178px; margin-right: 6px;">
-            <option value="">Select Seller</option>
-            @if($sellers && count($sellers) > 0)
-                @foreach($sellers as $seller)
-                    <option value="{{ $seller->id }}" {{ request('seller') == $seller->id ? 'selected' : '' }}>
-                    {{ $seller->nama_lengkap }}</option>
-                @endforeach
-            @endif
-        </select>
-        <button type="submit" class="btn btn-default">Filter</button>
-    </form>
-    @endguest
 
     <br>
     <br>

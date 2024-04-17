@@ -102,82 +102,77 @@
     }
 </style>
 
-
-
-
 <div class="gallary" id="Gallary">
     <h1>Menu<span>Prasmanan</span></h1>
     <div class="gallary_image_box owl-carousel">
         @foreach ($prasmanans as $menu)
-            <div class="gallary_card">
-                <div class="menu_image">
-                    <img src="{{ url('storage/menu_images/' . basename($menu->menu_pic)) }}" alt="Menu Image">
-                </div>
-                <div class="menu_info">
-                    <h2>{{ $menu->menu_name }}</h2>
-                    @if ($menu->reviews->count() > 0)
-                        <div class="rating">
-                            @for ($i = 1; $i <= 5; $i++)
-                                @if ($i <= $menu->averageRating())
-                                    <i class="icon-star-full"></i>
-                                @else
-                                    <i class="icon-star-empty"></i>
-                                @endif
-                            @endfor
-                            <span>{{ number_format($menu->averageRating(), 1) }}</span>
-                        </div>
-                    @else
-                        <div class="rating">
-                            @for ($i = 1; $i <= 5; $i++)
-                                <i class="icon-star-empty"></i>
-                            @endfor
-                            <span>0</span>
-                        </div>
-                    @endif
-                    <small>{{ $menu->seller }}</small>
-                    <h3>Rp. {{ number_format($menu->menu_price, 0, ',', '.') }}</h3>
-                    <br>
-                    <a href="#" class="menu_btn menu_btn_gallery">Order Now</a>
-                    <!-- Tambahkan kelas menu_btn_gallery -->
-                </div>
-                <!-- Tambahkan bagian untuk menampilkan makanan -->
-                <div class="menu_foods">
-                    <ul hidden>
-                        <li>{{ $menu->makanan_1 }}</li>
-                        <li>{{ $menu->makanan_2 }}</li>
-                        <li>{{ $menu->makanan_3 }}</li>
-                        <li>{{ $menu->makanan_4 }}</li>
-                        <li>{{ $menu->makanan_5 }}</li>
-                        <li>{{ $menu->makanan_6 }}</li>
-                        <li>{{ $menu->makanan_7 }}</li>
-                        <li>{{ $menu->makanan_8 }}</li>
-                    </ul>
-                </div>
+        <div class="gallary_card">
+            <div class="menu_image">
+                <img src="{{ url('storage/menu_images/' . basename($menu->menu_pic)) }}" alt="Menu Image">
             </div>
+            <div class="menu_info">
+                <h2>{{ $menu->menu_name }}</h2>
+                @if ($menu->reviews->count() > 0)
+                <div class="rating">
+                    @for ($i = 1; $i <= 5; $i++) @if ($i <=$menu->averageRating())
+                        <i class="icon-star-full"></i>
+                        @else
+                        <i class="icon-star-empty"></i>
+                        @endif
+                        @endfor
+                        <span>{{ number_format($menu->averageRating(), 1) }}</span>
+                </div>
+                @else
+                <div class="rating">
+                    @for ($i = 1; $i <= 5; $i++) <i class="icon-star-empty"></i>
+                        @endfor
+                        <span>0</span>
+                </div>
+                @endif
+                <small>{{ $menu->seller }}</small>
+                <h3>Rp. {{ number_format($menu->menu_price, 0, ',', '.') }}</h3>
+                <br>
+                <!-- Tambahkan kelas menu_btn_gallery dan data-menu-id -->
+                <a href="#" class="menu_btn menu_btn_gallery" data-menu-id="{{ $menu->id }}">Order Now</a>
+            </div>
+            <!-- Tambahkan bagian untuk menampilkan makanan -->
+            <div class="menu_foods">
+                <ul hidden>
+                    <li>{{ $menu->makanan_1 }}</li>
+                    <li>{{ $menu->makanan_2 }}</li>
+                    <li>{{ $menu->makanan_3 }}</li>
+                    <li>{{ $menu->makanan_4 }}</li>
+                    <li>{{ $menu->makanan_5 }}</li>
+                    <li>{{ $menu->makanan_6 }}</li>
+                    <li>{{ $menu->makanan_7 }}</li>
+                    <li>{{ $menu->makanan_8 }}</li>
+                </ul>
+            </div>
+        </div>
         @endforeach
     </div>
 </div>
-
+<!-- Modal -->
 <div id="Myprasmanan" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
         <div class="menu-details">
             <div class="menu-image-and-foods">
-                <br>
                 <img src="" alt="Menu Image" id="menu-image">
-                <br>
-                <h2 id="menu-name"></h2>
                 <ul id="menu-foods"></ul>
             </div>
             <div class="menu-info">
                 <br>
+                <h2 id="menu-name"></h2>
+                <p><strong id="menu-desc"></strong></p>
                 <h3 id="menu-price"></h3>
                 <br>
                 @auth
-                <a href="{{ route('addMenu.to.order', $menu->id) }}" class="menu_btn">Order Now</a>   
+                <!-- Tambahkan kelas menu_btn_gallery dan data-menu-id -->
+                <a href="{{ route('addMenu.to.order', '') }}" class="menu_btn menu_btn_order">Order Now</a>
                 @endauth
                 @guest
-                <a href="{{ route('auth') }}" class="menu_btn">Order Now</a> 
+                <a href="{{ route('auth') }}" class="menu_btn">Order Now</a>
                 @endguest
             </div>
         </div>
@@ -186,9 +181,8 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-...
 <script>
-$(document).ready(function(){
+    $(document).ready(function() {
         $('.owl-carousel').owlCarousel({
             loop: true,
             margin: 10,
@@ -205,10 +199,15 @@ $(document).ready(function(){
                 }
             }
         });
+
         // Event listener for opening modal when "Order Now" button is clicked
         $('.menu_btn_gallery').click(function(event) {
             event.preventDefault(); // Prevent the default behavior of the link
 
+            // Ambil ID menu dari atribut data-menu-id
+            var menuId = $(this).data('menu-id');
+
+            // Temukan informasi menu yang sesuai dengan ID menu
             var $menuCard = $(this).closest('.gallary_card');
             var menuName = $menuCard.find('.menu_info h2').text();
             var menuPrice = $menuCard.find('.menu_info h3').text();
@@ -236,6 +235,10 @@ $(document).ready(function(){
             foods.forEach(function(food, index) {
                 $menuFoods.append('<li>Menu ' + (index + 1) + ': ' + food + '</li>');
             });
+
+            // Tambahkan ID menu ke link "Order Now" di dalam modal
+            var $orderButton = $('.menu_btn_order');
+            $orderButton.attr('href', '{{ route('addMenu.to.order', '') }}/' + menuId);
 
             // Show the modal
             $('#Myprasmanan').fadeIn(); // Show modal with fade-in animation

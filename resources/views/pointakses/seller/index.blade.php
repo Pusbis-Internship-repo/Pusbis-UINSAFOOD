@@ -27,7 +27,7 @@
               <div class="icon">
                 <i class="icon-moneybag"></i>
               </div>
-              <a href="{{route('admin.orders')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{route('seller.orders')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -41,7 +41,7 @@
               <div class="icon">
                 <i class="icon-cart2"></i>
               </div>
-              <a href="{{route('admin.history')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{route('seller.orders')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -56,7 +56,7 @@
               <div class="icon">
                 <i class="icon-menu"></i>
               </div>
-              <a href="{{route('datamenu')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{route('menusseller')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->

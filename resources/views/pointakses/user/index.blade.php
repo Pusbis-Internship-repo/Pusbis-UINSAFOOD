@@ -240,7 +240,7 @@
                                         value="1" />
                                     <label for="star1" title="text">1 star</label>
                                 </div>
-                                <textarea name="review" id="review" class="form-control" rows="3"></textarea>
+                                <textarea name="review" id="review" class="form-control" rows="3" required></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
