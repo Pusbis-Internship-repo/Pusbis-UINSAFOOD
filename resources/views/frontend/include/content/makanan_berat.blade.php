@@ -14,16 +14,22 @@
 
     .modal-content {
         background-color: #fefefe;
-        margin: 15% auto;
+        margin: 5% auto; /* Mengurangi margin atas agar tidak terlalu jauh dari atas */
         padding: 20px;
         border: 1px solid #888;
-        width: 60%;
-        height: 80%;
+        width: 50%; /* Lebar modal */
+        height: 90%; /* Tinggi modal */
+        overflow-y: auto; /* Tambahkan overflow-y untuk scroll jika konten lebih panjang dari tinggi modal */
+        display: flex;
+        flex-direction: row; /* Mengatur tata letak menjadi horizontal */
+        align-items: center; /* Pusatkan konten secara vertikal */
     }
 
     .modal-content img {
         max-width: 100%;
-        max-height: 80vh;
+        max-height: 60vh; /* Mengurangi tinggi maksimum gambar */
+        flex: 0 0 auto; /* Agar gambar tidak memperbesar untuk mengisi ruang */
+        margin-right: 20px; /* Beri margin kanan agar terpisah dari teks */
     }
 
     .close {
@@ -60,17 +66,40 @@
         display: none;
     }
 
+    .menu_btn {
+        background-color: #4CAF50; /* Warna latar belakang tombol */
+        color: white; /* Warna teks tombol */
+        padding: 10px 20px; /* Padding tombol */
+        border: none; /* Hilangkan border */
+        border-radius: 5px; /* Border radius untuk membuat tombol lebih bulat */
+        text-align: center; /* Pusatkan teks di dalam tombol */
+        text-decoration: none; /* Hilangkan dekorasi teks */
+        display: inline-block; /* Buat tombol menjadi inline block agar dapat diatur ukurannya */
+        font-size: 16px; /* Ukuran teks tombol */
+        cursor: pointer; /* Ganti kursor menjadi pointer saat dihover */
+        margin-left: auto; /* Posisikan tombol ke kanan */
+    }
+
+    .menu_btn:hover {
+        background-color: #45a049; /* Warna latar belakang tombol saat dihover */
+    }
+
+    .menu_btn:active {
+        background-color: #367C3D; /* Warna latar belakang tombol saat ditekan */
+    }
+
     /* Show navigation buttons on smaller screens */
     @media screen and (max-width: 768px) {
         .owl-carousel .owl-nav {
             display: block;
         }
     }
+
     @media screen and (max-width: 480px) {
-    .owl-carousel .owl-item {
-        margin-right: -30px; /* Atur nilai margin-right ke nilai negatif yang lebih kecil pada layar yang lebih kecil */
+        .owl-carousel .owl-item {
+            margin-right: -30px; /* Atur nilai margin-right ke nilai negatif yang lebih kecil pada layar yang lebih kecil */
+        }
     }
-}
 </style>
 
 
@@ -134,13 +163,14 @@
         <span class="close">&times;</span>
         <div class="menu-details">
             <div class="menu-image-and-foods">
+                <br>
                 <img src="" alt="Menu Image" id="menu-image">
+                <br>
+                <h2 id="menu-name"></h2>
                 <ul id="menu-foods"></ul>
             </div>
             <div class="menu-info">
                 <br>
-                <h2 id="menu-name"></h2>
-                <p><strong>{{ $menu->menu_desc}} </strong></p>
                 <h3 id="menu-price"></h3>
                 <br>
                 @auth
