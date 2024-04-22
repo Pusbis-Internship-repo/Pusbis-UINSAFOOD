@@ -34,6 +34,7 @@
                 <td>{{ $seller->unit_kerja }}</td>
                 <td><a href="{{route('deleteseller', $seller->id)}}" class="btn btn-danger btn-sm" 
                   onclick="return confirm('Apakah yakin dihapus? {{ $seller->nama_lengkap }}');">Hapus</a></td>
+                <td><a href="{{route('edit.seller', $seller->id)}}" class="btn btn-info btn-sm">Edit</a></td>
             </tr>
             @endforeach
           </tbody>

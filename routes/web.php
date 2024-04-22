@@ -99,6 +99,14 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/createseller', [AdminController::class, 'sellercreate'])->name('createseller')->middleware('userAkses:admin');
     Route::post('/storeseller', [AdminController::class, 'storeseller'])->name('storeseller')->middleware('userAkses:admin');
     Route::get('dataseller/deleteseller/{id}', [AdminController::class, 'deleteseller'])->name('deleteseller')->middleware('userAkses:admin');
+    Route::get('dataseller/{id}/editdataseller', [AdminController::class, 'editpenjual'])->name('edit.seller')->middleware('userAkses:admin');
+    Route::put('{id}/updatedataseller', [AdminController::class, 'updateseller'])->name('update.seller')->middleware('userAkses:admin');
+    
+
+    Route::get('/datauser', [AdminController::class, 'pengguna'])->name('data.pengguna')->middleware('userAkses:admin');
+    Route::get('/datauser/{id}/edituser', [AdminController::class, 'editpengguna'])->name('edit.data.pengguna')->middleware('userAkses:admin');
+    Route::put('{id}/updatedatauser', [AdminController::class, 'updatepengguna'])->name('update.pengguna')->middleware('userAkses:admin');
+    
     
     
     ////////// Admin Kategori Controller //////////

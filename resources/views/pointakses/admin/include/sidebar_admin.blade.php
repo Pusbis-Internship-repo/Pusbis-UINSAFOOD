@@ -81,6 +81,16 @@
                         </a>
                     </span>
                 </li>
+                <li class="nav-item">
+                    <span>
+                        <a href="{{route('data.pengguna')}}" class="nav-link">
+                            <i class="nav-icon far fa-plus-square"></i>
+                            <p>
+                                Pengguna
+                            </p>
+                        </a>
+                    </span>
+                </li>
 
                 <!-- Control Sidebar -->
                 <aside class="control-sidebar control-sidebar-dark">

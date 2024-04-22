@@ -95,11 +95,78 @@ class AdminController extends Controller
         return redirect()->route('dataseller')->with('message', 'data berhasil dibuat');
     }
 
+    function editpenjual($id){
+        $sellers = User::findOrFail($id);
+        return view('pointakses/admin/data_seller/edit', compact('sellers'));
+    }
+
+    function updateseller(Request $request, $id){
+
+        $sellers = User::findOrFail($id);
+
+        // Validasi data
+        $request->validate([
+            'nama_lengkap' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$id,
+            'password' => 'required|string|min:6', // Password bisa kosong
+        ]);
+    
+        // Update data pengguna
+        $sellers->nama_lengkap = $request->nama_lengkap;
+        $sellers->email = $request->email;
+    
+        // Jika password dimasukkan, enkripsi password baru
+        if ($request->filled('password')) {
+            $sellers->password = Hash::make($request->password);
+        }
+    
+        $sellers->save();
+    
+        return redirect()->route('dataseller')->with('success', 'Data pengguna berhasil diperbarui.');
+    }
+
+
     function deleteseller($id)
     {
         $sellers = User::find($id);
         $sellers->delete();
 
         return redirect()->back();
+    }
+
+    function pengguna()
+    {
+        $users = User::where('role', 'user')->get();
+
+        return view('pointakses/admin/data_pengguna/tampilkan_data', compact('users'));
+    }
+
+    function editpengguna($id){
+        $user = User::findOrFail($id);
+        return view('pointakses/admin/data_pengguna/edit', compact('user'));
+    }
+    function updatepengguna(Request $request, $id){
+
+        $user = User::findOrFail($id);
+
+        // Validasi data
+        $request->validate([
+            'nama_lengkap' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$id,
+            'password' => 'required|string|min:6', // Password bisa kosong
+        ]);
+    
+        // Update data pengguna
+        $user->nama_lengkap = $request->nama_lengkap;
+        $user->email = $request->email;
+    
+        // Jika password dimasukkan, enkripsi password baru
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+    
+        $user->save();
+    
+        return redirect()->route('data.pengguna')->with('success', 'Data pengguna berhasil diperbarui.');
     }
 }

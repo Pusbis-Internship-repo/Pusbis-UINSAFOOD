@@ -97,7 +97,6 @@
                         </p>
 
                     </div>
-                    <a href="{{route('forgot.password')}}">Forgot Password</a>
                 </div>
         </div>
         </form>
