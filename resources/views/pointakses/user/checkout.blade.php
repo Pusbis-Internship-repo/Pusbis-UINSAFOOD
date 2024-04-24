@@ -68,9 +68,9 @@
             <label for="alamat_pengiriman" class="form-label">Alamat Pengiriman</label>
             <select name="alamat_pengiriman" id="alamat_pengiriman" class="form-control">
                 <option value="" disabled selected>-- Pilih Alamat --</option>
-                <option value="Pusat Pengembangan Bisnis UINSA">Pusat Pengembangan Bisnis UINSA</option>
-                <option value="UINSA Kampus 1, Ahmad Yani">UINSA Kampus 1, Ahmad Yani</option>
-                <option value="UINSA Kampus 2, Gunung Anyar">UINSA Kampus 2, Gunung Anyar</option>
+                <option value="Pusat Pengembangan Bisnis UINSA">GreenSA Inn & Training Center</option>
+                <option value="UINSA Kampus 1, Ahmad Yani">UINSA Kampus Ahmad Yani</option>
+                <option value="UINSA Kampus 2, Gunung Anyar">UINSA Kampus Gunung Anyar</option>
                 <option value="Lainnya..">Lainnya..</option>
             </select>
         </div>
