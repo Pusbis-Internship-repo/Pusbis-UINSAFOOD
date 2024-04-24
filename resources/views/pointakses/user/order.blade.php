@@ -260,6 +260,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            font-size: 22px;
+            font-weight: 600;
         }
 
         .total p:first-child {
@@ -400,11 +402,12 @@
             <div class="detail-order">
                 <p>Detail Order</p>
             </div>
-
+            <br>
             <div class="total">
-                <p>Total: </p>
-                <p><strong> Rp. {{ number_format($total, 0, ',', '.') }}</strong></p>
+                <h3>Total: </h3>
+                <h3><strong> Rp. {{ number_format($total, 0, ',', '.') }}</strong></h3>
             </div>
+            <br>
             <div class="checkout-btn">
                 <button class="checkout-btn" onclick="window.location.href='{{ url('/checkout') }}'">Checkout</button>
             </div>

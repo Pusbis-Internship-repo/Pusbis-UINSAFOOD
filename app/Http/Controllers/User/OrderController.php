@@ -47,7 +47,7 @@ class OrderController extends Controller
                 'total' => $this->calculateTotal($orderData),
                 'id_pesanan' => $orderId, 
                 'nama_penerima' => $request->input('nama_penerima'), 
-                'alamat_pengiriman' => $request->input('alamat_pengiriman'), 
+                'alamat_pengiriman' => $request->input('alamat_pengiriman')  === 'Lainnya..' ? $request->input('alamat_lain') : $request->input('alamat_pengiriman'),
                 'fakultas' => $request->input('fakultas'), 
                 'tanggal' => $request->input('tanggal'), 
                 'jam' => $request->input('jam'), 

@@ -71,7 +71,14 @@
                 <option value="Pusat Pengembangan Bisnis UINSA">Pusat Pengembangan Bisnis UINSA</option>
                 <option value="UINSA Kampus 1, Ahmad Yani">UINSA Kampus 1, Ahmad Yani</option>
                 <option value="UINSA Kampus 2, Gunung Anyar">UINSA Kampus 2, Gunung Anyar</option>
+                <option value="Lainnya..">Lainnya..</option>
             </select>
+        </div>
+        <div id="alamat_pengiriman_lain" style="display: none;">
+            <label for="">Ketik Alamat Lain Disini</label>
+            <div class="form_group">
+                <input type="text" name="alamat_lain" id="alamat_lain" class="form-control">
+            </div>
         </div>
         <div class="mb-3">
             <label for="fakultas" class="form-label">Fakultas</label>
@@ -110,5 +117,20 @@
     <div class="text-right">
         <strong>Total: Rp. {{ number_format($total, 0, ',', '.') }}</strong>
     </div>
+
+    <script>
+        document.getElementById('alamat_pengiriman').addEventListener('change', function() {
+            var selectedOption = this.value;
+            if (selectedOption === 'Lainnya..') {
+                document.getElementById('alamat_pengiriman_lain').style.display = 'block';
+                document.getElementById('alamat_lain').required = true; // Aktifkan input alamat pengiriman
+            } else {
+                document.getElementById('alamat_pengiriman_lain').style.display = 'none';
+                document.getElementById('alamat_lain').required = false; // Nonaktifkan input alamat pengiriman
+            }
+            document.getElementById('alamat_lain').value = selectedOption === 'Lainnya..' ? '' : selectedOption;
+        });
+    </script>
+
 </div>
 @endsection
