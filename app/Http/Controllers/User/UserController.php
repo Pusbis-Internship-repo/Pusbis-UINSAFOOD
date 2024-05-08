@@ -169,7 +169,8 @@ class UserController extends Controller
                 "quantity" => 1,
                 "menu_price" => $menu->menu_price,
                 "menu_desc" => $menu->menu_desc,
-                "subtotal" => $menu->menu_price
+                "subtotal" => $menu->menu_price,
+                "min_order_time" => $menu->min_order_time
             ];
         }
 

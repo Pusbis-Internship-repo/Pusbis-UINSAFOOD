@@ -368,7 +368,7 @@
                         </div>
                         <div class="product-details">
                             <h2 class="product-name">{{ $order_detail['menu_name'] }}</h2>
-                            <p class="vendor">{{ $order_detail['seller'] }}</p>
+                            <p class="vendor">{{ $order_detail['seller'] }} ({{ $order_detail['min_order_time'] }})</p>
                         </div>
                         <div class="price-field product-price">
                             <p class="price">Rp. {{ number_format($order_detail['menu_price'], 0, ',', '.') }}</p>

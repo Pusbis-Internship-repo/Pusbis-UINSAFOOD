@@ -48,7 +48,7 @@ class OrderController extends Controller
                 'id_pesanan' => $orderId, 
                 'nama_penerima' => $request->input('nama_penerima'), 
                 'alamat_pengiriman' => $request->input('alamat_pengiriman')  === 'Lainnya..' ? $request->input('alamat_lain') : $request->input('alamat_pengiriman'),
-                'fakultas' => $request->input('fakultas'), 
+                'fakultas' => $request->input('fakultas') === 'Lainnya..' ? $request->input('upt_lain') : $request->input('fakultas'),
                 'tanggal' => $request->input('tanggal'), 
                 'jam' => $request->input('jam'), 
                 'min_order_time' => $request->input('min_order_time'),

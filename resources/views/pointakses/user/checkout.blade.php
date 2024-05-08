@@ -56,7 +56,7 @@
         @endif
     </table>
 
-    <h2>Delivery Details</h2>
+    <h2>Detail Pengiriman</h2>
     <!-- Add a form for entering delivery details -->
     <form action="{{ route('place.order') }}" method="post">
         @csrf
@@ -93,7 +93,14 @@
                 <option value="Ekonomi dan Bisnis Islam">Ekonomi dan Bisnis Islam</option>
                 <option value="Psikologi dan Kesehatan">Psikologi dan Kesehatan</option>
                 <option value="Sains dan Teknologi">Sains dan Teknologi</option>
+                <option value="Lainnya..">Lainnya..</option>
             </select>
+        </div>
+        <div id="fakultas_lain" style="display: none;">
+            <label for="">Ketik UPT Disini</label>
+            <div class="form_group">
+                <input type="text" name="upt_lain" id="upt_lain" class="form-control">
+            </div>
         </div>
         <div class="mb-3">
             <label for="tanggal" class="form-label">Tanggal</label>
@@ -129,6 +136,18 @@
                 document.getElementById('alamat_lain').required = false; // Nonaktifkan input alamat pengiriman
             }
             document.getElementById('alamat_lain').value = selectedOption === 'Lainnya..' ? '' : selectedOption;
+        });
+
+        document.getElementById('fakultas').addEventListener('change', function() {
+            var selectedOption = this.value;
+            if (selectedOption === 'Lainnya..') {
+                document.getElementById('fakultas_lain').style.display = 'block';
+                document.getElementById('upt_lain').required = true; // Aktifkan input alamat pengiriman
+            } else {
+                document.getElementById('fakultas_lain').style.display = 'none';
+                document.getElementById('upt_lain').required = false; // Nonaktifkan input alamat pengiriman
+            }
+            document.getElementById('upt_lain').value = selectedOption === 'Lainnya..' ? '' : selectedOption;
         });
     </script>
 
