@@ -92,6 +92,7 @@ class SellerController extends Controller
         }
 
         $groupedOrders = $groupedOrdersQuery
+            ->orderBy('orders.id_pesanan', 'desc')
             ->groupBy('orders.id_pesanan', 'orders.total', 'orders.nama_penerima', 'orders.alamat_pengiriman', 'orders.fakultas', 'orders.tanggal', 'orders.jam', 'users.nama_lengkap','status')
             ->get();
 

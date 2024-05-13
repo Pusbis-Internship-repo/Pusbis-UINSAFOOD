@@ -55,6 +55,7 @@ class AdminOrderController extends Controller
         }
 
         $groupedOrders = $groupedOrdersQuery
+            ->orderBy('id_pesanan', 'desc')
             ->groupBy('id_pesanan', 'total', 'nama_penerima', 'alamat_pengiriman', 'fakultas', 'tanggal', 'jam', 'users.nama_lengkap')
             ->get();
 
@@ -152,6 +153,7 @@ class AdminOrderController extends Controller
             });
         }
         $groupedOrders = $groupedOrdersQuery
+            ->orderBy('id_pesanan', 'desc')
             ->groupBy('id_pesanan', 'total', 'nama_penerima', 'alamat_pengiriman', 'fakultas', 'tanggal', 'jam', 'status', 'users.nama_lengkap')
             ->get();
 

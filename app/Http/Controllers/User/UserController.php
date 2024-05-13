@@ -264,6 +264,7 @@ class UserController extends Controller
         }
 
         $groupedOrders = $groupedOrdersQuery
+            ->orderBy('id_pesanan', 'desc')
             ->groupBy('id_pesanan', 'total', 'nama_penerima', 'alamat_pengiriman', 'fakultas', 'tanggal', 'jam', 'status')
             ->get();
 
