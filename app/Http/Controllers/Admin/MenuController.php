@@ -14,8 +14,10 @@ use Intervention\Image\Facades\Image;
 
 class MenuController extends Controller
 {
+    //Menampilkan daftar menu dengan search
     function data_menu(Request $request)
     {
+        //Cari menu berdasarkan nama saat menggunakan search
         if ($request->has('search')) {
             $menus = Menu::where('menu_name', 'LIKE', '%' . $request->search . '%')->get();
         } else {
@@ -24,16 +26,20 @@ class MenuController extends Controller
         return view('pointakses/admin/data_menu/tampilkan_menu', compact('menus'));
     }
 
+    //Menampilkan page create menu admin
     function create_menu()
     {
+        //Mengambil semua kategori dan user dengan role seller
         $categories = Category::all();
         $users = User::where('role', 'seller')->get();
 
         return view('pointakses/admin/data_menu/create', compact('categories', 'users'));
     }
 
+    //Function untuk menyimpan menu ke database
     function store_menu(Request $request): RedirectResponse
     {
+        //Validasi input
         $this->validate($request, [
             'menu_pic' => 'required|image|mimes:jpeg,jpg,png',
             'min_order' => 'required|in:H-1,H-2,H-3',
@@ -44,8 +50,10 @@ class MenuController extends Controller
             'menu_desc' => 'required',
         ]);
         
+        //Mendapatkan seller berdasarkan id
         $vendor = User::find($request->input('vendor'));
 
+        //Menyimpan instance model baru
         $menu = new Menu();
         $menu->menu_name = $request->input('menu_name');
         $menu->menu_price = $request->input('menu_price');
@@ -55,35 +63,48 @@ class MenuController extends Controller
         $menu->menu_desc = $request->input('menu_desc');
         $menu->min_order_time = $request->input('min_order');
 
+        //Ambil ID makanan yang baru saja disimpan
         $menuId = $menu->id;
 
+        //Jika terdapat file gambar yang diupload
         if ($request->hasFile('menu_pic')) {
             $image = $request->file('menu_pic');
 
+            // Ubah nama file gambar menjadi ID makanan
             $imageName = $menuId . '.' . $image->getClientOriginalExtension();
 
+            //Resize ukuran gambar menu
             $resizedImage = Image::make($image)->fit(600, 520)->encode();
 
+            //Tentukan path penyimpanan baru
             $imagePath = 'public/menu_images/' . $imageName;
 
+            //Simpan gambar yang telah diresize ke dalam penyimpanan
             Storage::put($imagePath, $resizedImage);
 
+            // Update path gambar pada model Menu
             $menu->menu_pic = $imagePath;
+
+            //Menyimpan menu ke database
             $menu->save();
         }
 
         return redirect()->route('datamenu')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
+    //Page edit menu admin
     function edit_menu(string $id): View
     {
+        //Menampilkan semua menu dari database
         $menus = Menu::findOrFail($id);
 
         return view('pointakses/admin/data_menu/edit', compact('menus'));
     }
 
+    //Function untuk update menu admin
     function menu_update(Request $request, $id)
     {
+        //Mengambil menu berdasarkan id
         $menus = Menu::find($id);
         $menus->menu_name = $request->input('menu_name');
         $menus->menu_price = $request->input('menu_price');

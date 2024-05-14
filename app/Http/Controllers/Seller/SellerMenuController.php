@@ -2,35 +2,40 @@
 
 namespace App\Http\Controllers\Seller;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Contracts\View\View;
-use App\Models\Menu;
-use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
-
+use Illuminate\Http\RedirectResponse;
+use App\Http\Controllers\Controller;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Menu;
 
 class SellerMenuController extends Controller
 {
+    //Menampilkan daftar menu penjual dengan search
     function data_menu_seller(Request $request)
     {
+        //Mencari menu berdasarkan nama saat digunakan
         if ($request->has('search')) {
             $menus = Menu::where('menu_name', 'LIKE', '%' . $request->search . '%')->get();
         } else {
+            //Jika tidak ada, ambil semua menu
             $menus = Menu::all();
         }
         return view('pointakses/seller/data_menu_seller/tampilkan_menu_seller', compact('menus'));
     }
 
+    //Page create menu seller
     function create_menu()
     {
+        //Mengambil semua kategori
         $categories = Category::all();
 
         return view('pointakses/seller/data_menu_seller/create', compact('categories'));
     }
 
+    //Menyimpan menu ke database
     public function store_menu(Request $request): RedirectResponse
     {
         // Validasi input
@@ -60,7 +65,6 @@ class SellerMenuController extends Controller
         $menu->makanan_7 = $request->input('makanan_7');
         $menu->makanan_8 = $request->input('makanan_8');
     
-    
         // Simpan data menu ke dalam database
         $menu->save();
     
@@ -84,16 +88,17 @@ class SellerMenuController extends Controller
         // Redirect dengan pesan sukses
         return redirect()->route('data_menu_seller')->with(['success' => 'Data Berhasil Disimpan!']);
     }
-    
-    
 
+    //Page edit menu seller
     function edit_menu(string $id): View
     {
+        //Menampilkan semua menu
         $menus = Menu::findOrFail($id);
 
         return view('pointakses/seller/data_menu_seller/edit', compact('menus'));
     }
 
+    //Function untuk update menu
     function menu_update(Request $request, $id): RedirectResponse
     {
         $menus = Menu::find($id);
@@ -122,6 +127,7 @@ class SellerMenuController extends Controller
             // Ubah nama file gambar menjadi ID makanan
             $imageName = $menuId . '.' . $image->getClientOriginalExtension();
 
+            // Resize ukuran gambar menu
             $resizedImage = Image::make($image)->fit(600, 520)->encode();
 
             // Tentukan path penyimpanan baru
@@ -137,8 +143,11 @@ class SellerMenuController extends Controller
 
         return redirect()->route('data_menu_seller')->with('Berhasil', 'Menu berhasil diupdate.');
     }
+
+    //Function untuk delete menu
     public function menu_delete($id)
     {
+        //Mengambil menu berdasarkan id
         $menus = menu::find($id);
         $menus->delete();
 
