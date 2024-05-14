@@ -2,24 +2,21 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
-
-use Illuminate\Http\RedirectResponse;
-
-use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Session;
-
+use Illuminate\Http\RedirectResponse;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\Order;
-
-use App\Models\Menu;
 
 class OrderController extends Controller
 {
+    //Memproses dan menyimpan pesanan yang ditempatkan oleh user
     public function placeOrder(Request $request): RedirectResponse
     {
+        //Mendapatkan data pesanan dari sesi pengguna
         $orderData = Session::get("order_" . auth()->id());
 
+        //Jika tidak ada item di keranjang, kembali ke halaman dengan pesan error
         if (!$orderData) {
             return redirect()->route('menu_user')->with('error', 'Tidak ada data pesanan yang tersedia.');
         }
@@ -30,8 +27,10 @@ class OrderController extends Controller
         // Mendapatkan catatan dari request
         $catatan = $request->input('catatan');
 
+        //Menghitung total pesanan
         $total = $this->calculateTotal($orderData);
         
+        //Menyimpan detail pemesanan ke database
         foreach ($orderData as $orderDetail) {
             $orderDetail['id_pesanan'] = $orderId; // Tetapkan id_pesanan ke setiap detail order
             
@@ -61,16 +60,19 @@ class OrderController extends Controller
         // Update nilai 'total' setelah semua item order ditambahkan
         $this->updateOrderTotal($orderId);
         
+        //Hapus data pesanan dari session
         Session::forget("order_" . auth()->id());
         
         // Redirect ke halaman terima kasih atau halaman lainnya
         return redirect()->route('history_order')->with('success', 'Transaksi berhasil.')->with(compact('total'));
     }
-    
+
+    //Function untuk menghitung total pesanan
     private function calculateTotal($orderData)
     {
         $total = 0;
 
+        //Menjumlahkan subtotal dari setiap item pesanan
         foreach ($orderData as $orderDetail) {
             $total += $orderDetail['subtotal'];
         }
@@ -78,16 +80,19 @@ class OrderController extends Controller
         return $total;
     }
 
+    //Memperbarui nilai total untuk pesanan berdasarkan id_pesanan
     private function updateOrderTotal($orderId)
     {
+        //Mengambil semua item pesanan berdasarkan id_pesanan
         $orderItems = Order::where('id_pesanan', $orderId)->get();
     
+        //Menghitung total dengan menjumlah subtotal
         $totalOrder = $orderItems->sum('subtotal');
     
+        //Memperbarui total pesanan di setiap item pesanan
         foreach ($orderItems as $orderItem) {
             $orderItem->total = $totalOrder;
             $orderItem->save();
         }
     }
-    
 }

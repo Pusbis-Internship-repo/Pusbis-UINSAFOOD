@@ -115,26 +115,34 @@ class MenuController extends Controller
         // Ambil ID makanan yang baru saja disimpan
         $menuId = $menus->id;
 
+        //Jika mengupdate gambar menu
         if ($request->hasFile('menu_pic')) {
             $image = $request->file('menu_pic');
 
+            //Ubah nama file gambar menjadi ID makanan
             $imageName = $menuId . '.' . $image->getClientOriginalExtension();
 
+            //Resize ukuran gambar menu
             $resizedImage = Image::make($image)->fit(600, 520)->encode();
 
+            //Tentukan path penyimpanan
             $imagePath = 'public/menu_images/' . $imageName;
 
+            //Simpan gambar yang telah diresize ke folder penyimpanan
             Storage::put($imagePath, $resizedImage);
 
+            //Update path gambar pada model menu
             $menus->menu_pic = $imagePath;
             $menus->save();
         }
 
         return redirect()->route('datamenu')->with('Berhasil', 'Menu berhasil diupdate.');
-        ;
     }
+
+    ////Function untuk delete menu admin
     public function menu_delete($id)
     {
+        //Mengambil menu berdasarkan id
         $menus = menu::find($id);
         $menus->delete();
 

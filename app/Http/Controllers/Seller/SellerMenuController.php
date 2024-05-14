@@ -130,7 +130,7 @@ class SellerMenuController extends Controller
             // Resize ukuran gambar menu
             $resizedImage = Image::make($image)->fit(600, 520)->encode();
 
-            // Tentukan path penyimpanan baru
+            // Tentukan path penyimpanan
             $imagePath = 'public/menu_images/' . $imageName;
 
             // Simpan gambar yang telah diresize ke dalam penyimpanan
