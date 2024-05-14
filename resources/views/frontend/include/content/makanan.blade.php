@@ -52,7 +52,7 @@
                                         <a href="{{ route('addMenu.to.order', $menu->id) }}" class="menu_btn">Order Now</a>   
                                         @endauth
                                         @guest
-                                        <a href="{{ route('auth') }}" class="menu_btn">Order Now</a> 
+                                        <a href="{{ route('login') }}" class="menu_btn">Order Now</a> 
                                         @endguest
                                     </div>
 

@@ -126,7 +126,7 @@
                 <div class="row">
                     <div class="input-field col s6 m6 l6">
                         <p class="margin medium-small">
-                            <a href="{{ route('auth') }}" class="text-primary">Login</a>
+                            <a href="{{ route('login') }}" class="text-primary">Login</a>
                         </p>
                         <p class="margin medium-small">
                             <a href="/" style="float: left;">Kembali</a>

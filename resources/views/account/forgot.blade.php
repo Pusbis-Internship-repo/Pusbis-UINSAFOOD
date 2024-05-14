@@ -85,7 +85,7 @@
                 <div class="row">
                     <div class="input-field col s6 m6 l6">
                         <p class="margin medium-small">
-                            <a href="{{route('auth')}}" role="button" style="float: left;">Kembali</a>
+                            <a href="{{route('login')}}" role="button" style="float: left;">Kembali</a>
                         </p>
 
                     </div>

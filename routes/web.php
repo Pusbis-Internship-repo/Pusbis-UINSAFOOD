@@ -40,7 +40,7 @@ Route::middleware(['guest'])->group(function(){
 
 
     ////////// Guest Login & Regis Controller //////////
-    Route::get('/login', [AuthController::class, 'index'])->name('auth');
+    Route::get('/login', [AuthController::class, 'index'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
     Route::get('/reg', [AuthController::class, 'create'])->name('registrasi');
     Route::post('/reg', [AuthController::class, 'register']);
@@ -48,7 +48,7 @@ Route::middleware(['guest'])->group(function(){
 });
 
 Route::middleware(['auth'])->group(function(){
-
+    // to_route('login');
     ////////// User View Controller //////////
     Route::redirect('/home', '/user');
     Route::get('/menu_user',[UserController::class, 'menu_user'])->name('menu_user')->middleware('userAkses:user');

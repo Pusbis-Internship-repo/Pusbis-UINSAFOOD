@@ -173,7 +173,7 @@
                 <a href="{{ route('addMenu.to.order', '') }}" class="menu_btn menu_btn_order">Order Now</a>
                 @endauth
                 @guest
-                <a href="{{ route('auth') }}" class="menu_btn">Order Now</a>
+                <a href="{{ route('login') }}" class="menu_btn">Order Now</a>
                 @endguest
             </div>
         </div>
