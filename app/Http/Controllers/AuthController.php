@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AuthMail;
 use Illuminate\Http\Request;
@@ -12,15 +13,17 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    function index(){
+    function index()
+    {
         return view('account/login');
     }
 
-    function login(Request $request){
+    function login(Request $request)
+    {
         $request->validate([
             'email' => 'required',
             'password' => 'required',
-        ],[
+        ], [
             'email.required' => 'wajib di isi',
             'password.required' => 'wajib di isi',
         ]);
@@ -29,31 +32,33 @@ class AuthController extends Controller
             'password' => $request->password,
         ];
 
-        if(Auth::attempt($infologin)){
-            if(Auth::user()->role === 'user'){
-                if(Auth::user()->email_verified_at != null){
+        if (Auth::attempt($infologin)) {
+            if (Auth::user()->role === 'user') {
+                if (Auth::user()->email_verified_at != null) {
                     return redirect()->route('user')->with('success', 'Anda berhasil Login');
                 } else {
                     Auth::logout();
                     return redirect()->route('auth')->withErrors('Akun Belum Aktif');
                 }
-            } else if(Auth::user()->role === 'admin') {
+            } else if (Auth::user()->role === 'admin') {
                 return redirect()->route('admin')->with('success', 'Halo Admin', 'Anda berhasil Login');
-            } else if(Auth::user()->role === 'seller'){
+            } else if (Auth::user()->role === 'seller') {
                 return redirect()->route('seller')->with('success', 'Anda berhasil Login');
             } else {
                 Auth::logout();
                 return redirect()->route('auth')->withErrors('Akun Belum Aktif');
             }
-        }else{ 
+        } else {
             return redirect()->route('auth')->withErrors('Email atau Sandi salah');
         }
     }
-    function create(){
+    function create()
+    {
         return view('account/reg');
     }
-    
-    function register(Request $request){
+
+    function register(Request $request)
+    {
 
         $str = Str::random(100);
 
@@ -89,33 +94,44 @@ class AuthController extends Controller
             'verify_key' => $str
         ];
 
-        User::create($inforegister);
-
         $details = [
             'nama_lengkap' => $inforegister['nama_lengkap'],
             'role' => 'user',
-            'datetime'=> date('Y-m-d H:i:s'),
-            'website' => 'register UINSA FOOD', 
+            'datetime' => date('Y-m-d H:i:s'),
+            'website' => 'register UINSA FOOD',
             'url' => 'http://' . request()->getHttpHost() . "/" . "verify/" . $inforegister['verify_key'],
         ];
-        
-        Mail::to($inforegister['email'])->send(new AuthMail($details));
 
-        return redirect()->route('auth')->with('success','Link Verification di Email');
+        try {
+            Mail::to($inforegister['email'])->send(new AuthMail($details));
+        } catch (\Throwable $th) {
+            return back()->withInput()->with('error_mail', 'Gagal mengirim email. mohon masukkan email yang aktif');
+        }
+
+        try {
+            $user = User::create($inforegister);
+        } catch (\Throwable $th) {
+            return back()->withInput()->with('error_create', 'blablabla');
+        }
+
+
+        return redirect()->route('auth')->with('success', 'Link Verification di Email');
     }
-    function verify($verify_key) {
+    function verify($verify_key)
+    {
         $keyCheck = User::select('verify_key')
-        ->where('verify_key', $verify_key)
-        ->exists();
+            ->where('verify_key', $verify_key)
+            ->exists();
 
-        if($keyCheck){
+        if ($keyCheck) {
             $user = User::where('verify_key', $verify_key)->update(['email_verified_at' => date('Y-m-d H:i:s')]);
-            return redirect()->route('auth')->with('success','Verified');
-        }else{
-            return redirect()->route('auth')->withErrors('gagal','Verified pastikan melakukan register')->withInput();
+            return redirect()->route('auth')->with('success', 'Verified');
+        } else {
+            return redirect()->route('auth')->withErrors('gagal', 'Verified pastikan melakukan register')->withInput();
         }
     }
-    function logout(){
+    function logout()
+    {
         Auth::logout();
         return redirect('/');
     }

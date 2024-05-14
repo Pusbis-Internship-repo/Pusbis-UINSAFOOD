@@ -69,21 +69,21 @@ class MenuController extends Controller
         //Jika terdapat file gambar yang diupload
         if ($request->hasFile('menu_pic')) {
             $image = $request->file('menu_pic');
-
             // Ubah nama file gambar menjadi ID makanan
             $imageName = $menuId . '.' . $image->getClientOriginalExtension();
+            // dd($imageName, $menu);
 
             //Resize ukuran gambar menu
             $resizedImage = Image::make($image)->fit(600, 520)->encode();
-
             //Tentukan path penyimpanan baru
-            $imagePath = 'public/menu_images/' . $imageName;
-
+            // $imagePath = 'public/menu_images/' . $imageName;
+            $path = $request->file('menu_pic')->store('menu_images', 'public');
+            // dd($path);
             //Simpan gambar yang telah diresize ke dalam penyimpanan
-            Storage::put($imagePath, $resizedImage);
+            // Storage::put($imagePath, $resizedImage);
 
             // Update path gambar pada model Menu
-            $menu->menu_pic = $imagePath;
+            $menu->menu_pic = $path;
 
             //Menyimpan menu ke database
             $menu->save();

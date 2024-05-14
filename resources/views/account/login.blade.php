@@ -46,6 +46,7 @@
 
 
 
+
     <div id="login-page" class="row">
         <div class="col s12 z-depth-4 card-panel">
             <form method="POST" action="{{ route('auth') }}" class="login-form" id="form">

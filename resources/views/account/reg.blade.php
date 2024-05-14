@@ -54,6 +54,11 @@
                 <div class="row">
                     <div class="input-field col s12 center">
                         <p class="center login-form-text">Login for Food Ordering System</p>
+                        @if (session('error_mail'))
+                            <div class="text-danger">
+                                {{ session('error_mail') }}
+                            </div>
+                        @endif
                         @if ($errors->any())
                             <div class="alert alert-danger">
                                 <ul>
