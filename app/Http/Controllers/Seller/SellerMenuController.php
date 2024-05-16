@@ -40,7 +40,7 @@ class SellerMenuController extends Controller
     {
         // Validasi input
         $this->validate($request, [
-            'menu_pic' => 'required|image|mimes:jpeg,jpg,png',
+            'menu_pic' => 'required|image|mimes:jpeg,png|max:2048',
             'min_order' => 'required|in:H-1,H-2,H-3',
         ]);
     

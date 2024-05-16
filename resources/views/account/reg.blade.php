@@ -17,34 +17,35 @@
     <meta name="msapplication-TileImage" content="{{ asset('account/images/favicon/mstile-144x144.png') }}">
     <!-- For Windows Phone -->
 
-
     <!-- CORE CSS-->
-
-    <link href="{{ asset('account/css/materialize.min.css') }}" type="text/css" rel="stylesheet"
-        media="screen,projection">
+    <link href="{{ asset('account/css/materialize.min.css') }}" type="text/css" rel="stylesheet" media="screen,projection">
     <link href="{{ asset('account/css/style.min.css') }}" type="text/css" rel="stylesheet" media="screen,projection">
     <!-- Custome CSS-->
-    <link href="{{ asset('account/css/custom/custom.min.css') }}" type="text/css" rel="stylesheet"
-        media="screen,projection">
-    <link href="{{ asset('account/css/layouts/page-center.css') }}" type="text/css" rel="stylesheet"
-        media="screen,projection">
+    <link href="{{ asset('account/css/custom/custom.min.css') }}" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="{{ asset('account/css/layouts/page-center.css') }}" type="text/css" rel="stylesheet" media="screen,projection">
 
     <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
-    <link href="{{ asset('account/js/plugins/perfect-scrollbar/perfect-scrollbar.css') }}" type="text/css"
-        rel="stylesheet" media="screen,projection">
+    <link href="{{ asset('account/js/plugins/perfect-scrollbar/perfect-scrollbar.css') }}" type="text/css" rel="stylesheet" media="screen,projection">
+
+    <!-- Gaya khusus untuk tombol loading -->
+    <style>
+        .loading-btn {
+            cursor: not-allowed;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+    </style>
 
 </head>
 
 <body class="cyan">
-    <!-- Start Page Loading -->
+    <!-- Mulai Loading Halaman -->
     <div id="loader-wrapper">
         <div id="loader"></div>
         <div class="loader-section section-left"></div>
         <div class="loader-section section-right"></div>
     </div>
-    <!-- End Page Loading -->
-
-
+    <!-- Selesai Loading Halaman -->
 
     <div id="login-page" class="row">
         <div class="col s12 z-depth-4 card-panel">
@@ -53,7 +54,7 @@
 
                 <div class="row">
                     <div class="input-field col s12 center">
-                        <p class="center login-form-text">Login for Food Ordering System</p>
+                        <p class="center login-form-text">Login untuk Sistem Pemesanan Makanan</p>
                         @if (session('error_mail'))
                             <div class="text-danger">
                                 {{ session('error_mail') }}
@@ -102,7 +103,7 @@
                     <div class="input-field col s12">
                         <i class="mdi-action-perm-contact-cal prefix"></i>
                         <input name="no_tlp" id="username" type="text">
-                        <label for="no_tlp" class="center-align">No. Telephone</label>
+                        <label for="no_tlp" class="center-align">No. Telepon</label>
                     </div>
                 </div>
                 <div class="row margin">
@@ -121,7 +122,7 @@
                 </div>
 
                 <div class="input-field col s6 m6 l6">
-                    <button type="submit" class="btn" style="background-color: #499848;">Regis</button>
+                    <button type="submit" class="btn" style="background-color: #499848;" id="regis-btn">Regis</button>
                 </div>
                 <div class="row">
                     <div class="input-field col s6 m6 l6">
@@ -133,31 +134,35 @@
                         </p>
                     </div>
                 </div>
+            </form>
         </div>
-
-
-        </form>
     </div>
-    </div>
-
-
 
     <!-- ================================================
-    Scripts
+    Skrip
     ================================================ -->
 
-    <!-- jQuery Library -->
+    <!-- Perpustakaan jQuery -->
     <script type="text/javascript" src="{{ asset('account/js/plugins/jquery-1.11.2.min.js') }}"></script>
     <!--materialize js-->
     <script type="text/javascript" src="{{ asset('account/js/materialize.min.js') }}"></script>
     <!--scrollbar-->
-    <script type="text/javascript" src="{{ asset('account/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}">
-    </script>
+    <script type="text/javascript" src="{{ asset('account/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
 
-    <!--plugins.js - Some Specific JS codes for Plugin Settings-->
+    <!--plugins.js - Beberapa kode JS khusus untuk Pengaturan Plugin-->
     <script type="text/javascript" src="{{ asset('account/js/plugins.min.js') }}"></script>
-    <!--custom-script.js - Add your own theme custom JS-->
+    <!--custom-script.js - Tambahkan JS tema kustom Anda sendiri-->
     <script type="text/javascript" src="{{ asset('account/js/custom-script.js') }}"></script>
+
+    <!-- Skrip JavaScript khusus untuk menangani pengiriman form -->
+    <script type="text/javascript">
+        document.getElementById('form').addEventListener('submit', function() {
+            var regisBtn = document.getElementById('regis-btn');
+            regisBtn.innerHTML = 'Loading...';
+            regisBtn.classList.add('loading-btn');
+            regisBtn.disabled = true;
+        });
+    </script>
 
 </body>
 

@@ -115,7 +115,7 @@ class AuthController extends Controller
         }
 
 
-        return redirect()->route('auth')->with('success', 'Link Verification di Email');
+        return redirect()->route('login')->with('success', 'Link Verification di Email');
     }
     function verify($verify_key)
     {

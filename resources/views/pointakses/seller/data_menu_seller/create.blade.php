@@ -27,11 +27,11 @@
         
                     <div class="form-group">
                         <label for="menu_pic">Gambar Menu</label>
-                        <input type="file" class="form-control @error('menu_pic') is-invalid @enderror" name="menu_pic">
+                        <input type="file" class="form-control @error('menu_pic') is-invalid @enderror" name="menu_pic" accept="image/jpeg, image/png">
                         @error('menu_pic')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
-                    </div>
+                    </div>                    
         
                     <div class="form-group">
                         <label for="category">Select Category</label>
