@@ -301,30 +301,32 @@ class UserController extends Controller
     {
         $userId = Auth::id();
 
-        // Retrieve the grouped orders
-        $groupedOrders = DB::table('orders')
-            ->join('users', 'orders.users_id', '=', 'users.id')
-            ->select(
-                'id_pesanan',
-                'total',
-                'nama_penerima',
-                'alamat_pengiriman',
-                'fakultas',
-                'tanggal',
-                'jam',
-                'users.nama_lengkap',
-                'status',
-                'catatan',
-                DB::raw('GROUP_CONCAT(menu_name) as menu_names'),
-                DB::raw('GROUP_CONCAT(seller) as sellers'),
-                DB::raw('GROUP_CONCAT(menu_price) as menu_prices'),
-                DB::raw('GROUP_CONCAT(subtotal) as subtotals'),
-                DB::raw('GROUP_CONCAT(quantity SEPARATOR ", ") as quantities')
-            )
+        $orders = Order::with('user')
             ->where('users_id', $userId)
             ->where('id_pesanan', $id_pesanan)
-            ->groupBy('id_pesanan', 'total', 'nama_penerima', 'alamat_pengiriman', 'fakultas', 'tanggal', 'jam', 'users.nama_lengkap', 'status', 'catatan')
             ->get();
+
+        // Retrieve the grouped orders
+        $groupedOrders = $orders->groupBy('id_pesanan')->map(function($group){
+            $first = $group->first();
+            return(object)[
+                'id_pesanan' => $first->id_pesanan,
+                'total' => $first->total,
+                'nama_penerima' => $first->nama_penerima,
+                'alamat_pengiriman'  => $first->alamat_pengiriman,
+                'fakultas' => $first->fakultas,
+                'tanggal' => $first->tanggal,
+                'jam' => $first->jam,
+                'nama_lengkap' => $first->user->nama_lengkap,
+                'status' => $first->status,
+                'catatan' => $first->catatan,
+                'menu_names' => $group->pluck('menu_name')->implode(', '),
+                'sellers' => $group->pluck('seller')->implode(', '),
+                'menu_prices' => $group->pluck('menu_price')->implode(', '),
+                'subtotals' => $group->pluck('subtotal')->implode(', '),
+                'quantities' => $group->pluck('quantity')->implode(', ')
+            ];
+        });
 
         return view('pointakses.user.invoice', compact('userId', 'groupedOrders'));
     }

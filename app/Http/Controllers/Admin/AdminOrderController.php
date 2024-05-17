@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Models\Order;
 
 class AdminOrderController extends Controller
 {
@@ -80,28 +81,30 @@ class AdminOrderController extends Controller
     public function admin_invoice($id_pesanan)
     {
         //Mengelompokkan order berdasarkan id_pesanan yang sama
-        $groupedOrders = DB::table('orders')
-            ->join('users', 'orders.users_id', '=', 'users.id')
-            ->select(
-                'id_pesanan',
-                'total',
-                'nama_penerima',
-                'alamat_pengiriman',
-                'fakultas',
-                'tanggal',
-                'jam',
-                'users.nama_lengkap',
-                'status',
-                'catatan',
-                DB::raw('GROUP_CONCAT(menu_name) as menu_names'),
-                DB::raw('GROUP_CONCAT(seller) as sellers'),
-                DB::raw('GROUP_CONCAT(menu_price) as menu_prices'),
-                DB::raw('GROUP_CONCAT(subtotal) as subtotals'),
-                DB::raw('GROUP_CONCAT(quantity SEPARATOR ", ") as quantities')
-            )
+        $orders = Order::with('user')
             ->where('id_pesanan', $id_pesanan)
-            ->groupBy('id_pesanan', 'total', 'nama_penerima', 'alamat_pengiriman', 'fakultas', 'tanggal', 'jam', 'users.nama_lengkap', 'status', 'catatan')
             ->get();
+
+        $groupedOrders = $orders->groupBy('id_pesanan')->map(function($group){
+            $first = $group->first();
+            return(object)[
+                'id_pesanan' => $first->id_pesanan,
+                'total' => $first->total,
+                'nama_penerima' => $first->nama_penerima,
+                'alamat_pengiriman' => $first->alamat_pengiriman,
+                'fakultas' => $first->fakultas,
+                'tanggal' => $first->tanggal,
+                'jam' => $first->jam,
+                'nama_lengkap' => $first->user->nama_lengkap,
+                'status' => $first->status,
+                'catatan' => $first->catatan,
+                'menu_names' => $group->pluck('menu_name')->implode(', '),
+                'sellers' => $group->pluck('seller')->implode(', '),
+                'menu_prices' => $group->pluck('menu_price')->implode(', '),
+                'subtotals' => $group->pluck('subtotal')->implode(', '),
+                'quantities' => $group->pluck('quantity')->implode(', ')
+            ];
+        });
 
         return view('pointakses.admin.data_transaksi.admin_invoice', compact('groupedOrders'));
     }

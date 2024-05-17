@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Seller;
 
+use GuzzleHttp\Psr7\Query;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -132,31 +133,34 @@ class SellerController extends Controller
         //Mengambil id seller yang sedang login
         $userId = Auth::id();
 
-        //Mengelompokkan order berdasarkan id_pesanan yang sama dan menu yang dipunyai
-        $groupedOrders = DB::table('orders')
-            ->join('table_menu', 'orders.menu_name', '=', 'table_menu.menu_name')
-            ->join('users', 'orders.users_id', '=', 'users.id')
-            ->select(
-                'id_pesanan',
-                'total',
-                'nama_penerima',
-                'alamat_pengiriman',
-                'fakultas',
-                'tanggal',
-                'jam',
-                'users.nama_lengkap',
-                'status',
-                'catatan',
-                DB::raw('GROUP_CONCAT(orders.menu_name) as menu_names'),
-                DB::raw('GROUP_CONCAT(orders.seller) as sellers'),
-                DB::raw('GROUP_CONCAT(orders.menu_price) as menu_prices'),
-                DB::raw('GROUP_CONCAT(orders.subtotal) as subtotals'),
-                DB::raw('GROUP_CONCAT(orders.quantity SEPARATOR ", ") as quantities')
-            )
+        $orders = Order::with(['user', 'menu'])
+            ->whereHas('menu', function($query) use ($userId){
+                $query->where('users_id', $userId);
+            })
             ->where('id_pesanan', $id_pesanan)
-            ->where('table_menu.users_id', $userId)
-            ->groupBy('id_pesanan', 'total', 'nama_penerima', 'alamat_pengiriman', 'fakultas', 'tanggal', 'jam', 'users.nama_lengkap', 'status', 'catatan')
             ->get();
+
+        //Mengelompokkan order berdasarkan id_pesanan yang sama dan menu yang dipunyai
+        $groupedOrders = $orders->groupBy('id_pesanan')->map(function($group){
+            $first = $group->first();
+            return(object)[
+                'id_pesanan' => $first->id_pesanan,
+                'total' => $first->total,
+                'nama_penerima' => $first->nama_penerima,
+                'alamat_pengiriman' => $first->alamat_pengiriman,
+                'fakultas' => $first->fakultas,
+                'tanggal' => $first->tanggal,
+                'jam' => $first->jam,
+                'nama_lengkap' => $first->user->nama_lengkap,
+                'status' => $first->status,
+                'catatan' => $first->catatan,
+                'menu_names' => $group->pluck('menu_name')->implode(', '),
+                'sellers' => $group->pluck('seller')->implode(', '),
+                'menu_prices' => $group->pluck('menu_price')->implode(', '),
+                'subtotals' => $group->pluck('subtotal')->implode(', '),
+                'quantities' => $group->pluck('quantity')->implode(', ')
+            ];
+        });
 
         return view('pointakses/seller/data_order/seller_invoice', compact('groupedOrders'));
     }
