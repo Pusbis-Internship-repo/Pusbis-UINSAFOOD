@@ -35,6 +35,11 @@ class UserController extends Controller
         $total = 0;
         $menuDetail = [];
         $uniqueMenus = collect([]);
+        $totalseller = User::where('role', 'seller')->count();
+        $totalfood = Menu::where('category_id', '1')->count();  
+        $totaldrink = Menu::where('category_id', '2')->count();  
+        $totalsnack = Menu::where('category_id', '3')->count();  
+       
     
         //Menghitung total dan subtotal pesanan
         foreach ($order as $id => $order_detail) {
@@ -62,7 +67,7 @@ class UserController extends Controller
     
         //// Update sesi dengan nilai subtotal baru
         session()->put('order', $order);
-        return view('pointakses/user/index', compact('menus', 'makanans','prasmanans', 'minumans', 'snacks', 'order', 'lastOrder', 'userOrders', 'total', 'menuDetail', 'uniqueMenus', 'userReview'));
+        return view('pointakses/user/index', compact('menus', 'makanans','prasmanans', 'minumans', 'snacks', 'order', 'lastOrder', 'userOrders', 'total', 'menuDetail', 'uniqueMenus', 'userReview','totalseller','totalfood','totaldrink','totalsnack'));
     }
     
     //Menambahkan rating dan ulasan untuk pesanan tertentu

@@ -41,7 +41,7 @@
             <a href="{{ $details['url'] }}" style="text-decoration: none;color: rgb(255,255,255); padding:9px; background-color:blue; font:bold; border-radius:20%;" >Verifikasi</a>
             <br><br><br>
             <p>
-                Copy right @ althaf
+                Copy right PUSBIS 2023
             </p>
         </center>
     </table>

@@ -38,7 +38,7 @@ class AuthController extends Controller
                     return redirect()->route('user')->with('success', 'Anda berhasil Login');
                 } else {
                     Auth::logout();
-                    return redirect()->route('auth')->withErrors('Akun Belum Aktif');
+                    return redirect()->route('login')->withErrors('Akun Belum Aktif');
                 }
             } else if (Auth::user()->role === 'admin') {
                 return redirect()->route('admin')->with('success', 'Halo Admin', 'Anda berhasil Login');
@@ -105,18 +105,18 @@ class AuthController extends Controller
         try {
             Mail::to($inforegister['email'])->send(new AuthMail($details));
         } catch (\Throwable $th) {
-            return back()->withInput()->with('error_mail', 'Gagal mengirim email. mohon masukkan email yang aktif');
+            return back()->withInput()->with('error_mail', 'Gagal mengirim verifikasi email mohon kirim ulang email');
         }
 
         try {
             $user = User::create($inforegister);
         } catch (\Throwable $th) {
-            return back()->withInput()->with('error_create', 'blablabla');
+            return back()->withInput()->with('error_create', 'gagal membuat akun');
         }
 
 
         return redirect()->route('login')->with('success', 'Link Verification di Email');
-    }
+    }   
     function verify($verify_key)
     {
         $keyCheck = User::select('verify_key')
@@ -125,9 +125,9 @@ class AuthController extends Controller
 
         if ($keyCheck) {
             $user = User::where('verify_key', $verify_key)->update(['email_verified_at' => date('Y-m-d H:i:s')]);
-            return redirect()->route('auth')->with('success', 'Verified');
+            return redirect()->route('login')->with('success', 'Verified');
         } else {
-            return redirect()->route('auth')->withErrors('gagal', 'Verified pastikan melakukan register')->withInput();
+            return redirect()->route('login')->withErrors('gagal', 'Verified pastikan melakukan register')->withInput();
         }
     }
     function logout()

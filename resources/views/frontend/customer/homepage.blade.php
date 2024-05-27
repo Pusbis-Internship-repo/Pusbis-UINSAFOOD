@@ -65,7 +65,7 @@
                         data-transform_out="auto:auto;s:1000;e:Power3.easeInOut;"
                         data-mask_in="x:0px;y:0px;s:inherit;e:inherit;" data-mask_out="x:0;y:0;s:inherit;e:inherit;"
                         data-start="1200" style="z-index: 12;">
-                        <a href="#" class="btn-common btn-white page-scroll">Beli Sekarang</a>
+                        <a href="{{route('menu')}}" class="btn-common btn-white page-scroll">Beli Sekarang</a>
                     </div>
                 </li>
 
@@ -97,7 +97,7 @@
                         data-mask_in="x:0px;y:0px;s:inherit;e:inherit;" data-mask_out="x:0;y:0;s:inherit;e:inherit;"
                         data-start="1200" style="z-index: 12;">
                         <a href="#specialities" class="btn-common btn-white page-scroll">Tentang &nbsp; Kami</a>
-                        &nbsp; <a href="#order-form" class="btn-common btn-orange page-scroll">Beli &nbsp;
+                        &nbsp; <a href="{{route('menu')}}" class="btn-common btn-orange page-scroll">Beli &nbsp;
                             Sekaramg</a>
                     </div>
                 </li>
@@ -129,7 +129,7 @@
                         data-transform_out="auto:auto;s:1000;e:Power3.easeInOut;"
                         data-mask_in="x:0px;y:0px;s:inherit;e:inherit;" data-mask_out="x:0;y:0;s:inherit;e:inherit;"
                         data-start="1200" style="z-index: 12;">
-                        <a href="#" class="btn-common btn-white page-scroll">Beli Sekarang</a>
+                        <a href="{{route('menu')}}" class="btn-common btn-white page-scroll">Beli Sekarang</a>
                     </div>
                 </li>
                 <!-- SLIDE  -->
@@ -176,7 +176,7 @@
                     <div class="text-center">
                         <h2 class="heading_space">Nikmati kemudahan</h2>
                         <p class="heading_space detail">dalam memesan makanan</p>
-                        <a href="#" class="btn-common-white page-scroll">Order Now</a>
+                        <a href="{{route('menu')}}" class="btn-common-white page-scroll">Order Now</a>
                     </div>
                 </div>
                 <div class="col-md-2"></div>
@@ -194,32 +194,32 @@
                     data-wow-delay="300ms">
                     <div class="counters-item row">
                         <i class="icon-smile"></i>
-                        <h2><strong data-to="120">0</strong></h2>
-                        <p>Pelanggan</p>
+                        <h2><strong data-to="{{$totalseller}}">0</strong></h2>
+                        <p>Seller</p>
                     </div>
                 </div>
                 <div class="col-sm-3 col-xs-12 text-center wow fadeInDown" data-wow-duration="500ms"
                     data-wow-delay="600ms">
                     <div class="counters-item  row">
                         <i class="icon-food"></i>
-                        <h2><strong data-to="150">0</strong></h2>
-                        <p>Order</p>
+                        <h2><strong data-to="{{$totalfood}}">0</strong></h2>
+                        <p>Makanan</p>
                     </div>
                 </div>
                 <div class="col-sm-3 col-xs-12 text-center wow fadeInDown" data-wow-duration="500ms"
                     data-wow-delay="900ms">
                     <div class="counters-item  row">
                         <i class="icon-glass"></i>
-                        <h2><strong data-to="56">0</strong></h2>
-                        <p>Menu</p>
+                        <h2><strong data-to="{{$totaldrink}}">0</strong></h2>
+                        <p>Minuman</p>
                     </div>
                 </div>
                 <div class="col-sm-3 col-xs-12 text-center wow fadeInDown" data-wow-duration="500ms"
                     data-wow-delay="1200ms">
                     <div class="counters-item  row">
                         <i class="icon-coffee"></i>
-                        <h2><strong data-to="1350">0</strong></h2>
-                        <p>Cup of coffees</p>
+                        <h2><strong data-to="{{$totaldrink}}">0</strong></h2>
+                        <p>Snack</p>
                     </div>
                 </div>
             </div>

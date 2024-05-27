@@ -25,6 +25,11 @@ class HomeController extends Controller
 
         $order = session()->get('order', []);
         $total = 0;
+        $totalseller = User::where('role', 'seller')->count();
+        $totalfood = Menu::where('category_id', '1')->count();  
+        $totaldrink = Menu::where('category_id', '2')->count();  
+        $totalsnack = Menu::where('category_id', '3')->count();  
+          
 
         foreach ($order as $id => $order_detail) {
             $subtotal = isset ($order_detail['subtotal']) ? $order_detail['subtotal'] : 0;
@@ -34,7 +39,7 @@ class HomeController extends Controller
         }
         session()->put('order', $order);  // Update the session with new subtotal values
 
-        return view('frontend.customer.homepage', compact('makanans','prasmanans', 'minumans', 'snacks', 'order', 'total'));
+        return view('frontend.customer.homepage', compact('makanans','prasmanans', 'minumans', 'snacks', 'order', 'total','totalseller','totalfood','totaldrink','totalsnack'));
 
     }
     public function menu(Request $request)
