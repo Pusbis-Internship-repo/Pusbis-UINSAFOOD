@@ -106,7 +106,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/datauser', [AdminController::class, 'pengguna'])->name('data.pengguna')->middleware('userAkses:admin');
     Route::get('/datauser/{id}/edituser', [AdminController::class, 'editpengguna'])->name('edit.data.pengguna')->middleware('userAkses:admin');
     Route::put('{id}/updatedatauser', [AdminController::class, 'updatepengguna'])->name('update.pengguna')->middleware('userAkses:admin');
-    
+    Route::get('datauser/deleteuser/{id}', [AdminController::class, 'deleteuser'])->name('deleteuser')->middleware('userAkses:admin');
     
     
     ////////// Admin Kategori Controller //////////

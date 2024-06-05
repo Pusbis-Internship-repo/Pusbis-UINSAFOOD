@@ -194,4 +194,13 @@ class AdminController extends Controller
     
         return redirect()->route('data.pengguna')->with('success', 'Data pengguna berhasil diperbarui.');
     }
+
+    function deleteuser($id)
+    {
+        //Mengambil user berdasarkan id
+        $users = User::find($id);
+        $users->delete();
+
+        return redirect()->back();
+    }
 }

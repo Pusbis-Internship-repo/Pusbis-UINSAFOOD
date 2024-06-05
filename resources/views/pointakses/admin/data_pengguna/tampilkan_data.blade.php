@@ -42,7 +42,8 @@
                 <td>{{ $user->role }}</td>
                 <td>{{ $user->no_tlp }}</td>
                 <td>{{ $user->unit_kerja }}</td>
-                {{-- <td><a href="/user/{{ $user->id }}/delete" class="btn btn-danger btn-sm" onclick="return confirm('Apakah yakin dihapus? {{ $user->nama_lengkap }}');">Hapus</a></td> --}}
+                <td><a href="{{route('deleteuser', $user->id)}}" class="btn btn-danger btn-sm" 
+                  onclick="return confirm('Apakah yakin dihapus? {{ $user->nama_lengkap }}');">Hapus</a></td>
                 <td><a href="{{route('edit.data.pengguna', $user->id)}}" class="btn btn-info btn-sm">Edit</a></td>
             </tr>
             @endforeach
