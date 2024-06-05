@@ -46,10 +46,10 @@ class AuthController extends Controller
                 return redirect()->route('seller')->with('success', 'Anda berhasil Login');
             } else {
                 Auth::logout();
-                return redirect()->route('auth')->withErrors('Akun Belum Aktif');
+                return redirect()->route('login')->withErrors('Akun Belum Aktif');
             }
         } else {
-            return redirect()->route('auth')->withErrors('Email atau Sandi salah');
+            return redirect()->route('login')->withErrors('Email atau Sandi salah');
         }
     }
     function create()
