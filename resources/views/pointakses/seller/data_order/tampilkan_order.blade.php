@@ -24,7 +24,7 @@
                             </div>
                         </form>
 
-                        <div class="card-tools">
+                        <!-- <div class="card-tools">
                             <form action="{{ route('seller.orders') }}" method="GET">
                                 <div class="input-group input-group-sm" style="width: 150px;">
                                     <input type="text" name="table_search" class="form-control float-right"
@@ -37,7 +37,7 @@
                                     </div>
                                 </div>
                             </form>
-                        </div>
+                        </div> -->
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">

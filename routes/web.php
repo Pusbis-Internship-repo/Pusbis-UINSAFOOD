@@ -134,7 +134,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/seller', [SellerController::class, 'index'])->name('seller')->middleware('userAkses:seller');
     Route::get('/datamenuseller', [SellerMenuController::class, 'data_menu_seller'])->name('data_menu_seller')->middleware('userAkses:seller');
     Route::get('/createmenuseller', [SellerMenuController::class, 'create_menu'])->name('createmenuseller')->middleware('userAkses:seller');
-    Route::post('/menusseller', [SellerMenuController::class, 'store_menu'])->name('menusseller')->middleware('userAkses:seller');
+    Route::get('/menusseller', [SellerMenuController::class, 'store_menu'])->name('menusseller')->middleware('userAkses:seller');
     Route::get('datamenu/{id}/editmenuseller', [SellerMenuController::class, 'edit_menu'])->name('editmenuseller')->middleware('userAkses:seller');
     Route::put('{id}/updatemenuseller', [SellerMenuController::class, 'menu_update'])->name('updatemenuseller')->middleware('userAkses:seller');
     Route::get('datamenu/{id}/deletemenuseller', [SellerMenuController::class, 'menu_delete'])->name('deletemenuseller')->middleware('userAkses:seller');
