@@ -37,11 +37,11 @@
         </tr>
         <br><br><br>
         <center>
-            <h3>Klik Disini yaaaaa!!!!!</h3>
+            <h3>Untuk Mengaktifkan Akun Klik Dibawah Ini</h3>
             <a href="{{ $details['url'] }}" style="text-decoration: none;color: rgb(255,255,255); padding:9px; background-color:blue; font:bold; border-radius:20%;" >Verifikasi</a>
             <br><br><br>
             <p>
-                Copy right PUSBIS 2023
+                Copy right PUSBIS 2024
             </p>
         </center>
     </table>

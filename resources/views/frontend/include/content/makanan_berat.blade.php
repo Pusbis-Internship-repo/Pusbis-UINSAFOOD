@@ -14,22 +14,31 @@
 
     .modal-content {
         background-color: #fefefe;
-        margin: 5% auto; /* Mengurangi margin atas agar tidak terlalu jauh dari atas */
+        margin: 5% auto;
+        /* Reduce top margin */
         padding: 20px;
         border: 1px solid #888;
-        width: 50%; /* Lebar modal */
-        height: 90%; /* Tinggi modal */
-        overflow-y: auto; /* Tambahkan overflow-y untuk scroll jika konten lebih panjang dari tinggi modal */
+        width: 50%;
+        /* Modal width */
+        height: 90%;
+        /* Modal height */
+        overflow-y: auto;
+        /* Scroll if content is longer than modal height */
         display: flex;
-        flex-direction: row; /* Mengatur tata letak menjadi horizontal */
-        align-items: center; /* Pusatkan konten secara vertikal */
+        flex-direction: row;
+        /* Horizontal layout */
+        align-items: center;
+        /* Center content vertically */
     }
 
     .modal-content img {
         max-width: 100%;
-        max-height: 40vh; /* Mengurangi tinggi maksimum gambar */
-        flex: 0 0 auto; /* Agar gambar tidak memperbesar untuk mengisi ruang */
-        margin-bottom: 20px; /* Beri margin kanan agar terpisah dari teks */
+        max-height: 40vh;
+        /* Reduce max image height */
+        flex: 0 0 auto;
+        /* Prevent image from growing to fill space */
+        margin-bottom: 20px;
+        /* Add bottom margin */
         margin-top: 20px;
     }
 
@@ -68,88 +77,202 @@
     }
 
     .menu_btn {
-        background-color: #4CAF50; /* Warna latar belakang tombol */
-        color: white; /* Warna teks tombol */
-        padding: 10px 20px; /* Padding tombol */
-        border: none; /* Hilangkan border */
-        border-radius: 5px; /* Border radius untuk membuat tombol lebih bulat */
-        text-align: center; /* Pusatkan teks di dalam tombol */
-        text-decoration: none; /* Hilangkan dekorasi teks */
-        display: inline-block; /* Buat tombol menjadi inline block agar dapat diatur ukurannya */
-        font-size: 16px; /* Ukuran teks tombol */
-        cursor: pointer; /* Ganti kursor menjadi pointer saat dihover */
-        margin-left: auto; /* Posisikan tombol ke kanan */
+        background-color: #4CAF50;
+        /* Button background color */
+        color: white;
+        /* Button text color */
+        padding: 10px 20px;
+        /* Button padding */
+        border: none;
+        /* Remove border */
+        border-radius: 5px;
+        /* Rounded corners */
+        text-align: center;
+        /* Center text in button */
+        text-decoration: none;
+        /* Remove text decoration */
+        display: inline-block;
+        /* Inline block to size button */
+        font-size: 16px;
+        /* Button text size */
+        cursor: pointer;
+        /* Pointer cursor on hover */
+        margin-left: auto;
+        /* Align button to the right */
     }
 
     .menu_btn:hover {
-        background-color: #45a049; /* Warna latar belakang tombol saat dihover */
+        background-color: #45a049;
+        /* Button background color on hover */
     }
 
     .menu_btn:active {
-        background-color: #367C3D; /* Warna latar belakang tombol saat ditekan */
+        background-color: #367C3D;
+        /* Button background color on active */
     }
 
-    /* Show navigation buttons on smaller screens */
+    /* Heading style */
+    .gallary h2.heading {
+        font-size: 2em;
+        /* Default font size */
+        text-align: center;
+        display: inline;
+        /* Display inline for responsiveness */
+    }
+
+    .gallary h2.heading::before {
+        content: '';
+        /* Add content before the heading */
+        display: block;
+        /* Display as block */
+        width: 100%;
+        /* Full width */
+        height: 1px;
+        /* Thin line */
+        background: #ccc;
+        /* Light grey color */
+        margin-bottom: 10px;
+        /* Space below the line */
+    }
+
+    .gallary h2.heading::after {
+        content: '';
+        /* Add content after the heading */
+        display: block;
+        /* Display as block */
+        width: 100%;
+        /* Full width */
+        height: 1px;
+        /* Thin line */
+        background: #ccc;
+        /* Light grey color */
+        margin-top: 10px;
+        /* Space above the line */
+    }
+
+    .gallary hr.heading_space {
+        border: none;
+        /* Remove border */
+        height: 1px;
+        /* Thin line */
+        background: #ccc;
+        /* Light grey color */
+        margin: 10px auto;
+        /* Center and space around */
+        width: 50%;
+        /* Line width */
+    }
+
+    /* Responsive adjustments */
     @media screen and (max-width: 768px) {
         .owl-carousel .owl-nav {
             display: block;
+        }
+
+        .gallary h2.heading {
+            font-size: 1.5em;
+            /* Smaller font size for tablets */
+        }
+
+        .modal-content {
+            width: 70%;
+            /* Wider modal for tablets */
         }
     }
 
     @media screen and (max-width: 480px) {
         .owl-carousel .owl-item {
-            margin-right: -30px; /* Atur nilai margin-right ke nilai negatif yang lebih kecil pada layar yang lebih kecil */
+            margin-right: 10px;
+            /* Adjust margin for smaller screens */
+        }
+
+        .gallary h2.heading {
+            font-size: 1.2em;
+            /* Smaller font size for mobile devices */
+        }
+
+        .modal-content {
+            width: 90%;
+            /* Full width modal for mobile devices */
+        }
+
+        .gallary_card {
+            width: 90%;
+            /* Card width for mobile */
+            margin: 10px auto;
+            /* Center and space around cards */
+            box-sizing: border-box;
+            /* Include padding and border in width */
+        }
+
+        .menu_image img {
+            width: 100%;
+            /* Full width images */
+            height: auto;
+            /* Maintain aspect ratio */
+        }
+
+        .menu_info {
+            text-align: center;
+            /* Center text for better mobile readability */
         }
     }
 </style>
 
 <div class="gallary" id="Gallary">
-    <h1>Menu<span>Prasmanan</span></h1>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h2 class="heading">Prasmanan</h2>
+            <hr class="heading_space">
+        </div>
+    </div>
     <div class="gallary_image_box owl-carousel">
         @foreach ($prasmanans as $menu)
-        <div class="gallary_card">
-            <div class="menu_image">
-                <img src="{{ url('storage/menu_images/' . basename($menu->menu_pic)) }}" alt="Menu Image">
-            </div>
-            <div class="menu_info">
-                <h2>{{ $menu->menu_name }}</h2>
-                @if ($menu->reviews->count() > 0)
-                <div class="rating">
-                    @for ($i = 1; $i <= 5; $i++) @if ($i <=$menu->averageRating())
-                        <i class="icon-star-full"></i>
-                        @else
-                        <i class="icon-star-empty"></i>
-                        @endif
-                        @endfor
-                        <span>{{ number_format($menu->averageRating(), 1) }}</span>
+            <div class="gallary_card">
+                <div class="menu_image">
+                    <img src="{{ url('storage/menu_images/' . basename($menu->menu_pic)) }}" alt="Menu Image">
                 </div>
-                @else
-                <div class="rating">
-                    @for ($i = 1; $i <= 5; $i++) <i class="icon-star-empty"></i>
-                        @endfor
-                        <span>0</span>
+                <div class="menu_info">
+                    <h2>{{ $menu->menu_name }}</h2>
+                    @if ($menu->reviews->count() > 0)
+                        <div class="rating">
+                            @for ($i = 1; $i <= 5; $i++)
+                                @if ($i <= $menu->averageRating())
+                                    <i class="icon-star-full"></i>
+                                @else
+                                    <i class="icon-star-empty"></i>
+                                @endif
+                            @endfor
+                            <span>{{ number_format($menu->averageRating(), 1) }}</span>
+                        </div>
+                    @else
+                        <div class="rating">
+                            @for ($i = 1; $i <= 5; $i++)
+                                <i class="icon-star-empty"></i>
+                            @endfor
+                            <span>0</span>
+                        </div>
+                    @endif
+                    <small>{{ $menu->seller }}</small>
+                    <h3>Rp. {{ number_format($menu->menu_price, 0, ',', '.') }}</h3>
+                    <br>
+                    <!-- Tambahkan kelas menu_btn_gallery dan data-menu-id -->
+                    <a href="#" class="menu_btn menu_btn_gallery" data-menu-id="{{ $menu->id }}">Order Now</a>
                 </div>
-                @endif
-                <small>{{ $menu->seller }}</small>
-                <h3>Rp. {{ number_format($menu->menu_price, 0, ',', '.') }}</h3>
-                <br>
-                <!-- Tambahkan kelas menu_btn_gallery dan data-menu-id -->
-                <a href="#" class="menu_btn menu_btn_gallery" data-menu-id="{{ $menu->id }}">Order Now</a>
+                <!-- Tambahkan bagian untuk menampilkan makanan -->
+                <div class="menu_foods">
+                    <ul hidden>
+                        <li>{{ $menu->makanan_1 }}</li>
+                        <li>{{ $menu->makanan_2 }}</li>
+                        <li>{{ $menu->makanan_3 }}</li>
+                        <li>{{ $menu->makanan_4 }}</li>
+                        <li>{{ $menu->makanan_5 }}</li>
+                        <li>{{ $menu->makanan_6 }}</li>
+                        <li>{{ $menu->makanan_7 }}</li>
+                        <li>{{ $menu->makanan_8 }}</li>
+                    </ul>
+                </div>
             </div>
-            <!-- Tambahkan bagian untuk menampilkan makanan -->
-            <div class="menu_foods">
-                <ul hidden>
-                    <li>{{ $menu->makanan_1 }}</li>
-                    <li>{{ $menu->makanan_2 }}</li>
-                    <li>{{ $menu->makanan_3 }}</li>
-                    <li>{{ $menu->makanan_4 }}</li>
-                    <li>{{ $menu->makanan_5 }}</li>
-                    <li>{{ $menu->makanan_6 }}</li>
-                    <li>{{ $menu->makanan_7 }}</li>
-                    <li>{{ $menu->makanan_8 }}</li>
-                </ul>
-            </div>
-        </div>
         @endforeach
     </div>
 </div>
@@ -169,11 +292,11 @@
                 <h3 id="menu-price"></h3>
                 <br>
                 @auth
-                <!-- Tambahkan kelas menu_btn_gallery dan data-menu-id -->
-                <a href="{{ route('addMenu.to.order', '') }}" class="menu_btn menu_btn_order">Order Now</a>
+                    <!-- Tambahkan kelas menu_btn_gallery dan data-menu-id -->
+                    <a href="{{ route('addMenu.to.order', '') }}" class="menu_btn menu_btn_order">Order Now</a>
                 @endauth
                 @guest
-                <a href="{{ route('login') }}" class="menu_btn">Order Now</a>
+                    <a href="{{ route('login') }}" class="menu_btn">Order Now</a>
                 @endguest
             </div>
         </div>

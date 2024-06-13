@@ -308,7 +308,7 @@
 
         // Mengganti pesan default dengan pesan yang sudah diproses
         message = encodeURIComponent(message);
-        this.href = "https://wa.me/6285704232262?text=" + message;
+        this.href = "https://wa.me/6281332249106?text=" + message;
     });
 </script>
 
