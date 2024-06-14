@@ -9,7 +9,7 @@
     <div class="col-12 mt-4">
       <div class="card">
       <div class="card-header">
-        <h3 class="card-title">DATA SELLER</h3>
+        <h3 class="card-title">DATA MITRA</h3>
       </div>
       <!-- /.card-header -->
       <div class="card-body table-responsive p-0">

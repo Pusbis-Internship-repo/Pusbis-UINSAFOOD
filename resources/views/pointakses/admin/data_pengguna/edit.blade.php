@@ -1,6 +1,8 @@
 @extends('pointakses.admin.layouts.dashboard')
 
 @section('content')
+</style>
+    
     <div class="content-wrapper iframe-mode" data-widget="iframe" data-loading-screen="750">
         <h1>Edit Pengguna</h1>
 
@@ -32,8 +34,8 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                <a href="{{ route('update.pengguna', $user->id) }}" class="btn btn-primary">Kembali ke Daftar Menu</a>
+                <button type="submit" class="btn btn-primary btn-sm">Simpan Perubahan</button>
+                <a href="{{ route('data.pengguna') }}" class="btn btn-primary btn-sm">Kembali ke Daftar Pengguna</a>
             </div>
         </form>
     </div>
