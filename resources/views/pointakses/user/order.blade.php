@@ -277,8 +277,19 @@
         border: none;
         border-radius: 4px;
         cursor: pointer;
-        max-width: 150px;
+        width: 200px;
+        text-align: center;
+        justify-content: center;
     }
+
+    @media (max-width: 768px) {
+        .checkout-btn button {
+            max-width: 100px;  /* Atur panjang tombol untuk tampilan responsif */
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+    }
+        
 
     .continue-btn:hover,
     .checkout-btn button:hover {
@@ -391,7 +402,7 @@
             </div>
             <br>
             <div class="checkout-btn">
-                <button class="checkout-btn" onclick="window.location.href='{{ url('/checkout') }}'">Checkout</button>
+                <button class="checkout-btn"  onclick="window.location.href='{{ url('/checkout') }}'">Checkout</button>
             </div>
         </div>
         <br>

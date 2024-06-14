@@ -101,7 +101,7 @@
 
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary btn-sm">Simpan Perubahan</button>
-                <a href="{{ route('data_menu_seller') }}" class="btn btn-primary btn-sm">Kembali ke Daftar Mitra</a>
+                <a href="{{ route('data_menu_seller') }}" class="btn btn-primary btn-sm">Kembali ke Daftar Menu</a>
             </div>
         </form>
     </div>
