@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
         // Tambahkan contoh user admin
         User::create([
             'nama_lengkap' => 'Admin',
-            'email' => 'admin@example.com',
+            'email' => 'adminfood@gmail.com',
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'role' => 'admin',
