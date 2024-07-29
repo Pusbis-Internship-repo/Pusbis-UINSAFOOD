@@ -41,15 +41,15 @@ class MenuController extends Controller
     {
         //Validasi input
         $this->validate($request, [
-            'menu_pic' => 'required|image|mimes:jpeg,jpg,png',
-            'min_order' => 'required|in:H-1,H-2,H-3',
-            'menu_name' => 'required',
-            'menu_price' => 'required',
-            'category' => 'required',
-            'vendor' => 'required',
-            'menu_desc' => 'required',
+            'menu_pic'      => 'required|image|mimes:jpeg,jpg,png',
+            'min_order'     => 'required|in:H-1,H-2,H-3',
+            'menu_name'     => 'required',
+            'menu_price'    => 'required',
+            'category'      => 'required',
+            'vendor'        => 'required',
+            'menu_desc'     => 'required',
         ]);
-        
+
         //Mendapatkan seller berdasarkan id
         $vendor = User::find($request->input('vendor'));
 

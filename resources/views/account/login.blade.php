@@ -84,6 +84,7 @@
                     <div class="input-field col s12">
                         <i class="mdi-action-lock-outline prefix"></i>
                         <input name="password" id="password" type="password">
+                        <span class="toggle-btn" onclick="togglePassword()">👁️</span>
                         <label for="password">Password</label>
                     </div>
                 </div>
@@ -93,8 +94,12 @@
                 <div class="row">
                     <div class="input-field col s6 m6 l6">
                         <p class="margin medium-small">
-                            <a href="{{ route('registrasi') }}" style="float: left;">Register Now!</a>
-                            <a href="/" style="float: left;">Kembali</a>
+                            <a href="{{ route('registrasi') }}" style="float: left; color:green;"
+                            onmouseover="this.style.color='blue';"
+                            onmouseout="this.style.color='green';">Register Now!</a>
+                            <a href="/" style="float: left; color:green;"
+                            onmouseover="this.style.color='blue';"
+                            onmouseout="this.style.color='green';">Kembali</a>
                         </p>
 
                     </div>
@@ -123,6 +128,20 @@
     <!--custom-script.js - Add your own theme custom JS-->
     <script type="text/javascript" src="{{ asset('account/js/custom-script.js') }}"></script>
 
+    <script>
+        function togglePassword() {
+            const passwordField = document.getElementById('password');
+            const toggleButton = document.querySelector('.toggle-btn');
+
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                toggleButton.textContent = '🙈';
+            } else {
+                passwordField.type = 'password';
+                toggleButton.textContent = '👁️';
+            }
+        }
+    </script>
 </body>
 
 </html>

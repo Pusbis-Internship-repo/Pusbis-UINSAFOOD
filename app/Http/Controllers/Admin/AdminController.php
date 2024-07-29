@@ -19,8 +19,8 @@ class AdminController extends Controller
             ->where('status', 'setuju')
             ->distinct('id_pesanan')
             ->count('id_pesanan');
-        
-        //Menghitung jumlah order 
+
+        //Menghitung jumlah order
         $totalPendingOrders = DB::table('orders')
             ->where('status', 'pending')
             ->distinct('id_pesanan')
@@ -83,23 +83,23 @@ class AdminController extends Controller
     {
         // Validasi data input jika diperlukan
         $request->validate([
-            'nama_lengkap' => 'required|string',
-            'email' => 'required|email|unique:users,email',
-            'no_tlp' => 'required|string',
-            'alamat' => 'required|string',
-            'unit_kerja' => 'required|string',
-            'password' => 'required|min:8',
+            'nama_lengkap'  => 'required|string',
+            'email'         => 'required|email|unique:users,email',
+            'no_tlp'        => 'required|string',
+            'alamat'        => 'required|string',
+            'unit_kerja'    => 'required|string',
+            'password'      => 'required|min:8',
         ]);
 
         // Membuat akun seller baru
         $seller = new User();
-        $seller->nama_lengkap = $request->input('nama_lengkap');
-        $seller->email = $request->input('email');
-        $seller->no_tlp = $request->input('no_tlp');
-        $seller->alamat = $request->input('alamat');
-        $seller->unit_kerja = $request->input('unit_kerja');
-        $seller->password = Hash::make($request->input('password'));
-        $seller->role = 'seller'; // Menetapkan role sebagai 'seller'
+        $seller->nama_lengkap   = $request->input('nama_lengkap');
+        $seller->email          = $request->input('email');
+        $seller->no_tlp         = $request->input('no_tlp');
+        $seller->alamat         = $request->input('alamat');
+        $seller->unit_kerja     = $request->input('unit_kerja');
+        $seller->password       = Hash::make($request->input('password'));
+        $seller->role           = 'seller'; // Menetapkan role sebagai 'seller'
 
         // Simpan data ke database
         $seller->save();
@@ -123,22 +123,22 @@ class AdminController extends Controller
 
         // Validasi data
         $request->validate([
-            'nama_lengkap' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,'.$id,
-            'password' => 'required|string|min:6', // Password bisa kosong
+            'nama_lengkap'  => 'required|string|max:255',
+            'email'         => 'required|string|email|max:255|unique:users,email,'.$id,
+            'password'      => 'nullable|string|min:6', // Password bisa kosong
         ]);
-    
+
         // Update data pengguna
         $sellers->nama_lengkap = $request->nama_lengkap;
         $sellers->email = $request->email;
-    
+
         // Jika password dimasukkan, enkripsi password baru
         if ($request->filled('password')) {
             $sellers->password = Hash::make($request->password);
         }
-    
+
         $sellers->save();
-    
+
         return redirect()->route('dataseller')->with('success', 'Data pengguna berhasil diperbarui.');
     }
 
@@ -175,23 +175,23 @@ class AdminController extends Controller
 
         // Validasi data
         $request->validate([
-            'nama_lengkap' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,'.$id,
-            'password' => 'required|string|min:6', // Password bisa kosong
+            'nama_lengkap'  => 'required|string|max:255',
+            'email'         => 'required|string|email|max:255|unique:users,email,'.$id,
+            'password'      => 'required|string|min:6', // Password bisa kosong
         ]);
-    
+
         // Update data pengguna
         $user->nama_lengkap = $request->nama_lengkap;
         $user->email = $request->email;
-    
+
         // Jika password dimasukkan, enkripsi password baru
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }
-    
+
         //Menyimpan akun ke database
         $user->save();
-    
+
         return redirect()->route('data.pengguna')->with('success', 'Data pengguna berhasil diperbarui.');
     }
 
