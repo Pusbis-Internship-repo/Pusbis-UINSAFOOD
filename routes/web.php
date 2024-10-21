@@ -59,7 +59,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/user/invoice/{id_pesanan}', [UserController::class, 'invoice'])->name('user_invoice')->middleware('userAkses:user');
     Route::get('generate-pdf/{id_pesanan}', [UserController::class, 'generateinvoice'])->name('download')->middleware('userAkses:user');
     Route::post('/add-rating-review/{id_pesanan}', [UserController::class, 'addRatingReview'])->name('add.rating.review')->middleware('userAkses:user');
-    
+
     ////////// User EDIT //////////
     Route::get('/editprofile',[UserController::class, 'editprofile'])->name('editprofile')->middleware('userAkses:user');
     Route::put('/updateprofile',[UserController::class, 'updateprofile'])->name('updateprofile')->middleware('userAkses:user');
@@ -76,14 +76,14 @@ Route::middleware(['auth'])->group(function(){
     ////////// User Order Controller //////////
     Route::get('/checkout', [UserController::class, 'checkout'])->name('checkout')->middleware('userAkses:user');
     Route::post('/place-order', [OrderController::class, 'placeOrder'])->name('place.order')->middleware('userAkses:user');
-    
+
 
     ////////// User Order & Logout Controller //////////
     Route::get('/user', [UserController::class, 'index'])->name('user')->middleware('userAkses:user');
     Route::get('/user/order', [UserController::class, 'order_page'])->name('order_page')->middleware('userAkses:user');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    
+
     ////////// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //////////
 
     ////////// Admin Controller //////////
@@ -101,14 +101,16 @@ Route::middleware(['auth'])->group(function(){
     Route::get('dataseller/deleteseller/{id}', [AdminController::class, 'deleteseller'])->name('deleteseller')->middleware('userAkses:admin');
     Route::get('dataseller/{id}/editdataseller', [AdminController::class, 'editpenjual'])->name('edit.seller')->middleware('userAkses:admin');
     Route::put('{id}/updatedataseller', [AdminController::class, 'updateseller'])->name('update.seller')->middleware('userAkses:admin');
-    
+
 
     Route::get('/datauser', [AdminController::class, 'pengguna'])->name('data.pengguna')->middleware('userAkses:admin');
+    Route::get('/createuser', [AdminController::class, 'createpengguna'])->name('createuser')->middleware('userAkses:admin');
+    Route::post('/storeuser', [AdminController::class, 'storepengguna'])->name('storeuser')->middleware('userAkses:admin');
     Route::get('/datauser/{id}/edituser', [AdminController::class, 'editpengguna'])->name('edit.data.pengguna')->middleware('userAkses:admin');
     Route::put('{id}/updatedatauser', [AdminController::class, 'updatepengguna'])->name('update.pengguna')->middleware('userAkses:admin');
     Route::get('datauser/deleteuser/{id}', [AdminController::class, 'deleteuser'])->name('deleteuser')->middleware('userAkses:admin');
-    
-    
+
+
     ////////// Admin Kategori Controller //////////
     Route::get('/datakategori', [CategoryController::class, 'data_kategori'])->name('datakategori')->middleware('userAkses:admin');
     Route::get('/createcategory', [CategoryController::class, 'create_category'])->name('createcategory')->middleware('userAkses:admin');
@@ -125,7 +127,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('datamenu/{id}/editmenu', [MenuController::class, 'edit_menu'])->name('editmenu')->middleware('userAkses:admin');
     Route::put('{id}/updatemenu', [MenuController::class, 'menu_update'])->name('updatemenu')->middleware('userAkses:admin');
     Route::get('datamenu/{id}/deletemenu', [MenuController::class, 'menu_delete'])->name('deletemenu')->middleware('userAkses:admin');
-    
+
 
 
     ////////// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //////////
@@ -138,7 +140,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('datamenu/{id}/editmenuseller', [SellerMenuController::class, 'edit_menu'])->name('editmenuseller')->middleware('userAkses:seller');
     Route::put('{id}/updatemenuseller', [SellerMenuController::class, 'menu_update'])->name('updatemenuseller')->middleware('userAkses:seller');
     Route::get('datamenu/{id}/deletemenuseller', [SellerMenuController::class, 'menu_delete'])->name('deletemenuseller')->middleware('userAkses:seller');
-    
+
     ////////// Seller Profile //////////
     Route::get('/selleredit', [SellerController::class, 'selleredit'])->name('selleredit')->middleware('userAkses:seller');
     Route::put('/updateseller', [SellerController::class, 'updateprofileseller'])->name('updateseller')->middleware('userAkses:seller');

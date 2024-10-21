@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Exception;
 
 class AdminController extends Controller
 {
@@ -129,8 +130,8 @@ class AdminController extends Controller
         ]);
 
         // Update data pengguna
-        $sellers->nama_lengkap = $request->nama_lengkap;
-        $sellers->email = $request->email;
+        $sellers->nama_lengkap  = $request->nama_lengkap;
+        $sellers->email         = $request->email;
 
         // Jika password dimasukkan, enkripsi password baru
         if ($request->filled('password')) {
@@ -161,6 +162,48 @@ class AdminController extends Controller
         return view('pointakses/admin/data_pengguna/tampilkan_data', compact('users'));
     }
 
+    function createpengguna()
+    {
+        return view('pointakses/admin/data_pengguna/create');
+    }
+
+    //Function untuk menyimpan akun seller ke database
+    function storepengguna(Request $request)
+    {
+        // Validasi data input jika diperlukan
+        $request->validate([
+            'nama_lengkap'  => 'required|string',
+            'email'         => 'required|email|unique:users,email',
+            'role'          => 'required|string|in:user,admin',
+            'no_tlp'        => 'required|string',
+            'alamat'        => 'required|string',
+            'unit_kerja'    => 'required|string',
+            'password'      => ['required',
+                                'string',
+                                'min:8', // Minimum length of 8 characters
+                                'regex:/[a-z]/', // Must contain at least one lowercase letter
+                                'regex:/[A-Z]/', // Must contain at least one uppercase letter
+                                'regex:/[0-9]/', // Must contain at least one digit
+            ],
+        ]);
+
+        // Membuat akun seller baru
+        $pengguna = new User();
+        $pengguna->nama_lengkap   = $request->input('nama_lengkap');
+        $pengguna->email          = $request->input('email');
+        $pengguna->role           = $request->input('role');
+        $pengguna->no_tlp         = $request->input('no_tlp');
+        $pengguna->alamat         = $request->input('alamat');
+        $pengguna->unit_kerja     = $request->input('unit_kerja');
+        $pengguna->password       = Hash::make($request->input('password'));
+
+        // Simpan data ke database
+        $pengguna->save();
+
+        //Redirect dengan pesan sukses
+        return redirect()->route('data.pengguna')->with('success', 'Data berhasil dibuat');
+    }
+
     //Page edit akun pengguna
     function editpengguna($id){
         $user = User::findOrFail($id);
@@ -170,37 +213,58 @@ class AdminController extends Controller
     //Function untuk update akun pengguna biasa
     function updatepengguna(Request $request, $id){
 
-        //Mengambil user berdasarkan id
-        $user = User::findOrFail($id);
-
         // Validasi data
         $request->validate([
             'nama_lengkap'  => 'required|string|max:255',
             'email'         => 'required|string|email|max:255|unique:users,email,'.$id,
-            'password'      => 'required|string|min:6', // Password bisa kosong
+            'role'          => 'required|in:user,admin',
+            'no_tlp'        => 'required',
+            'alamat'        => 'required|string',
+            'unit_kerja'    => 'required|string',
+            'password'      => 'sometimes|nullable|string|min:6', // Password bisa kosong
         ]);
 
-        // Update data pengguna
-        $user->nama_lengkap = $request->nama_lengkap;
-        $user->email = $request->email;
+        try {
+            //Mengambil user berdasarkan id
+            $user = User::findOrFail($id);
 
-        // Jika password dimasukkan, enkripsi password baru
-        if ($request->filled('password')) {
-            $user->password = Hash::make($request->password);
+            // Update data pengguna
+            $user->nama_lengkap = $request->nama_lengkap;
+            $user->email        = $request->email;
+            $user->role         = $request->role;
+            $user->no_tlp       = $request->no_tlp;
+            $user->alamat       = $request->alamat;
+            $user->unit_kerja   = $request->unit_kerja;
+
+            // Jika password dimasukkan, enkripsi password baru
+            if ($request->filled('password')) {
+                $user->password = Hash::make($request->password);
+            }
+
+            //Menyimpan akun ke database
+            $user->save();
+
+            return redirect()->route('data.pengguna')->with('success', 'Data pengguna berhasil diperbarui.');
+        } catch (Exception $e) {
+            // If there's an error, redirect back with an error message
+            return redirect()->back()->with('error', 'Failed to update user.');
         }
 
-        //Menyimpan akun ke database
-        $user->save();
 
-        return redirect()->route('data.pengguna')->with('success', 'Data pengguna berhasil diperbarui.');
+
     }
 
     function deleteuser($id)
     {
-        //Mengambil user berdasarkan id
-        $users = User::find($id);
-        $users->delete();
+        try {
+            //Mengambil user berdasarkan id
+            $users = User::find($id);
+            $users->delete();
 
-        return redirect()->back();
+            return redirect()->back()->with('success','User deleted successfully.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Failed to deleted user.');
+        }
+
     }
 }

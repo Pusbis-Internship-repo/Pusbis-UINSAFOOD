@@ -43,48 +43,48 @@ class SellerMenuController extends Controller
             'menu_pic' => 'required|image|mimes:jpeg,png|max:2048',
             'min_order' => 'required|in:H-1,H-2,H-3',
         ]);
-    
+
         // Mendapatkan user yang sedang login
         $user = auth()->user();
-    
+
         // Membuat instance model Menu
         $menu = new Menu();
-        $menu->menu_name = $request->input('menu_name');
-        $menu->menu_price = $request->input('menu_price');
-        $menu->seller = $user->nama_lengkap;
-        $menu->category_id = $request->input('category');
-        $menu->menu_desc = $request->input('menu_desc');
-        $menu->users_id = auth()->id();
-        $menu->min_order_time = $request->input('min_order');
-        $menu->makanan_1 = $request->input('makanan_1');
-        $menu->makanan_2 = $request->input('makanan_2');
-        $menu->makanan_3 = $request->input('makanan_3');
-        $menu->makanan_4 = $request->input('makanan_4');
-        $menu->makanan_5 = $request->input('makanan_5');
-        $menu->makanan_6 = $request->input('makanan_6');
-        $menu->makanan_7 = $request->input('makanan_7');
-        $menu->makanan_8 = $request->input('makanan_8');
-    
+        $menu->menu_name        = $request->input('menu_name');
+        $menu->menu_price       = $request->input('menu_price');
+        $menu->seller           = $user->nama_lengkap;
+        $menu->category_id      = $request->input('category');
+        $menu->menu_desc        = $request->input('menu_desc');
+        $menu->users_id         = auth()->id();
+        $menu->min_order_time   = $request->input('min_order');
+        $menu->makanan_1        = $request->input('makanan_1');
+        $menu->makanan_2        = $request->input('makanan_2');
+        $menu->makanan_3        = $request->input('makanan_3');
+        $menu->makanan_4        = $request->input('makanan_4');
+        $menu->makanan_5        = $request->input('makanan_5');
+        $menu->makanan_6        = $request->input('makanan_6');
+        $menu->makanan_7        = $request->input('makanan_7');
+        $menu->makanan_8        = $request->input('makanan_8');
+
         // Simpan data menu ke dalam database
         $menu->save();
-    
+
         // Jika terdapat file gambar yang diupload
         if ($request->hasFile('menu_pic')) {
             $image = $request->file('menu_pic');
-    
+
             // Ubah nama file gambar menjadi ID menu
             $imageName = $menu->id . '.' . $image->getClientOriginalExtension();
-    
+
             // Resize dan simpan gambar ke dalam penyimpanan
             $resizedImage = Image::make($image)->fit(600, 520)->encode();
             $imagePath = 'public/menu_images/' . $imageName;
             Storage::put($imagePath, $resizedImage);
-    
+
             // Update path gambar pada model Menu
             $menu->menu_pic = $imagePath;
             $menu->save();
         }
-    
+
         // Redirect dengan pesan sukses
         return redirect()->route('data_menu_seller')->with(['success' => 'Data Berhasil Disimpan!']);
     }

@@ -1,8 +1,6 @@
 @extends('pointakses.admin.layouts.dashboard')'
-
 @section('content')
     <div class="content-wrapper iframe-mode" data-widget="iframe" data-loading-screen="600">
-
         <div class="card card-primary mt-4">
             <div class="card-header">
                 <h3 class="card-title">Tambah Akun Seller</h3>

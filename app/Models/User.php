@@ -17,10 +17,10 @@ class User extends Authenticatable
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
-     * 
+     *
      */
 
-     protected $table = 'users';
+    protected $table = 'users';
     protected $guarded = ['id'];
 
     protected $fillable = [

@@ -1,50 +1,85 @@
 @extends('pointakses.admin.layouts.dashboard')
 
+<style>
+    .alert {
+        position: relative;
+        animation: fadeOut 5s forwards;
+        animation-delay: 5s;
+    }
+    @keyframes fadeOut {
+        0% {
+            opacity: 1;
+        }
+        90% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+            display: none;
+        }
+    }
+</style>
 
 @section('content')
 <div class="content-wrapper iframe-mode" data-widget="iframe" data-loading-screen="750">
-  <div class="content">
-    <br>
-    <a href="{{ route('createseller') }}" class="btn btn-success">Tambah Akun Seller</a>
-    <div class="col-12 mt-4">
-      <div class="card">
-      <div class="card-header">
-        <h3 class="card-title">DATA MITRA</h3>
-      </div>
-      <!-- /.card-header -->
-      <div class="card-body table-responsive p-0">
-        <table class="table table-hover text-nowrap">
-          <thead>
-            <tr>
-                <th>Nama</th>
-                <th>Email</th>
-                <th>NO Telepon</th>
-                <th>Alamat Lengkap</th>
-                <th>Unit Kerja</th>
-                <th>Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach ($sellers as $seller)
-            <tr>
-                <td>{{ $seller->nama_lengkap }}</td>
-                <td>{{ $seller->email }}</td>
-                <td>{{ $seller->no_tlp }}</td>
-                <td>{{ $seller->alamat }}</td>
-                <td>{{ $seller->unit_kerja }}</td>
-                <td><a href="{{route('deleteseller', $seller->id)}}" class="btn btn-danger btn-sm" 
-                  onclick="return confirm('Apakah yakin dihapus? {{ $seller->nama_lengkap }}');">Hapus</a></td>
-                <td><a href="{{route('edit.seller', $seller->id)}}" class="btn btn-info btn-sm">Edit</a></td>
-            </tr>
-            @endforeach
-          </tbody>
-        </table>
-      </div>
-      <!-- /.card-body -->
+    @if (session('success'))
+        <div class="alert alert-success" role="alert">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger" role="alert">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    <div class="content">
+        <br>
+        <a href="{{ route('createseller') }}" class="btn btn-success">Tambah Akun Seller</a>
+        <div class="col-12 mt-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">DATA MITRA</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-hover text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>NO Telepon</th>
+                                <th>Alamat Lengkap</th>
+                                <th>Unit Kerja</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($sellers as $seller)
+                                <tr>
+                                    <td>{{ $seller->nama_lengkap }}</td>
+                                    <td>{{ $seller->email }}</td>
+                                    <td>{{ $seller->no_tlp }}</td>
+                                    <td>{{ $seller->alamat }}</td>
+                                    <td>{{ $seller->unit_kerja }}</td>
+                                    <td>
+                                        <a href="{{route('deleteseller', $seller->id)}}" class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Apakah yakin dihapus? {{ $seller->nama_lengkap }}');">Hapus</a>
+                                    </td>
+                                    <td>
+                                        <a href="{{route('edit.seller', $seller->id)}}" class="btn btn-info btn-sm">Edit</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
     </div>
-    <!-- /.card -->
-  </div>
-</div>
 </div>
 @include('pointakses.admin.include.sidebar_admin')
 

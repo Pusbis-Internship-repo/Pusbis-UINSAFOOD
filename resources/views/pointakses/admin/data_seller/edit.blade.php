@@ -12,7 +12,7 @@
 
     <div class="content-wrapper iframe-mode" data-widget="iframe" data-loading-screen="750">
         <div class="col md-2">
-        <h1>Edit Pengguna</h1>
+            <h1>Edit Pengguna</h1>
         </div>
         @if(session('success'))
             <div class="alert alert-success">
@@ -42,6 +42,39 @@
 
                     <!-- error message untuk email -->
                     @error('email')
+                        <div class="alert alert-danger mt-2">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="#">Nomer Telepon</label>
+                    <input type="text" name="no_tlp"  class="form-control @error('no_tlp') is-invalid @enderror" placeholder="Nomer Telepon" value="{{ $sellers->no_tlp }}">
+                    <!-- error message untuk nama_lengkap -->
+                    @error('no_tlp')
+                        <div class="alert alert-danger mt-2">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="#">UNIT KERJA</label>
+                    <input type="text" name="unit_kerja"  class="form-control @error('unit_kerja') is-invalid @enderror" placeholder="UNIT KERJA" value="{{ $sellers->unit_kerja }}">
+                    <!-- error message untuk nama_lengkap -->
+                    @error('unit_kerja')
+                        <div class="alert alert-danger mt-2">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="#">ALAMAT LENGKAP</label>
+                    <input type="text" name="alamat" class="form-control @error('alamat') is-invalid @enderror" placeholder="ALAMAT LENGKAP" value="{{ $sellers->alamat }}">
+                    <!-- error message untuk nama_lengkap -->
+                    @error('alamat')
                         <div class="alert alert-danger mt-2">
                             {{ $message }}
                         </div>
